@@ -9,8 +9,10 @@ import {
   Legend,
 } from 'chart.js'
 import { Line } from "react-chartjs-2";
-import InputPanel, { useGameSetting } from '../Component/InputPanel';
+import InputPanel, { useGameSetting } from '../component/InputPanel';
 import { getFullLoseProbMat } from '../lib/strategy';
+import Header from '../component/Header'
+import GraphIcon from '../asset/graph2.svg'
 
 ChartJS.register(
   CategoryScale,
@@ -49,21 +51,15 @@ function loseProbMatToData(loseProbMat: number[][]) {
   }
 }
 
-function Header() {
-  return <header>
-    <h1 className='font-bold text-3xl dark:text-white'>승률 계산기</h1>
-  </header>
-}
-
 export default function CalculatorMain() {
   const gameSetting = useGameSetting();
   const loseProbMat = getFullLoseProbMat(gameSetting.numPlayer, gameSetting.maxCall, gameSetting.numEnd);
   const data = loseProbMatToData(loseProbMat)
   return <section>
-    <Header/>
+    <Header src={GraphIcon} alt="승률 계산기" text="승률 계산기"/>
     <div>
       <InputPanel gameSetting={gameSetting}/>
-      <Line datasetIdKey='1' data={data}/>
+      <Line datasetIdKey='1' data={data} className="w-auto"/>
     </div>
   </section>
 }

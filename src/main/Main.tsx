@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import CalculatorMain from "../Calculator/CalculatorMain";
+import CalculatorMain from "../calculator/CalculatorMain";
 import HistoryMain from "../history/HistoryMain";
 import SinglePlayMain from "../singlePlay/SinglePlayMain";
 import Landing from "./Landing";
@@ -15,11 +15,11 @@ export function MainRouter() {
 }
 
 export default function Main() {
-  return <div className="flex flex-row w-full">
+  return <div className="lg:flex lg:flex-row">
     <aside className="flex-none w-64" aria-label="Sidebar">
       <SideBar/>
     </aside>
-    <main className="flex-auto">
+    <main className="flex-auto ml-2">
       <MainRouter/>
     </main>
   </div>

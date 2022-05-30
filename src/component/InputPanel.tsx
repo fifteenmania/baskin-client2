@@ -32,7 +32,7 @@ function changeEventToValue(e: React.ChangeEvent<HTMLInputElement>) {
 }
 
 function InputFieldNumber({onChange, name, value, ...props}: {onChange: React.ChangeEventHandler<HTMLInputElement>, name: string, value: number}) {
-  return <input className="bg-gray-50 border text-base font-normal" type="number" onChange={onChange} value={value} name={name} {...props} />
+  return <input className="bg-gray-50 border text-base font-normal w-10" type="number" onChange={onChange} value={value} name={name} {...props} />
 }
 
 function InputFieldContainer({children}: {children?: React.ReactNode}) {
