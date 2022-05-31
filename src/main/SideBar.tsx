@@ -25,7 +25,7 @@ export default function SideBar() {
   useEffect(() => {
     console.log(location.pathname)
   })
-  return <div className="overflow-y-auto py-4 px-3 bg-gray-50 rounded dark:bg-gray-800">
+  return <nav className="overflow-y-auto py-4 px-3 bg-gray-50 rounded dark:bg-gray-800 h-full">
     <Link to="/" className="flex items-center pl-2.5 mb-5">
       <img className="h-6 mr-3" src="https://picsum.photos/30" alt="베스킨라빈스 아이콘"/>
       <h1 className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">베스킨 시뮬레이터</h1>
@@ -52,5 +52,5 @@ export default function SideBar() {
       <li className="inline-flex">
       </li>
     </ul>
-  </div>
+  </nav>
 }

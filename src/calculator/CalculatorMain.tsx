@@ -56,10 +56,10 @@ export default function CalculatorMain() {
   const loseProbMat = getFullLoseProbMat(gameSetting.numPlayer, gameSetting.maxCall, gameSetting.numEnd);
   const data = loseProbMatToData(loseProbMat)
   return <section>
-    <Header src={GraphIcon} alt="승률 계산기" text="승률 계산기"/>
-    <div>
+    <Header src={GraphIcon} alt="승률 계산기" text="승률 계산기" to="/calculator"/>
+    <div className=''>
       <InputPanel gameSetting={gameSetting}/>
-      <Line datasetIdKey='1' data={data} className="w-auto"/>
+      <Line datasetIdKey='1' data={data} className="mt-4 w-fit"/>
     </div>
   </section>
 }
