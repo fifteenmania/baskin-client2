@@ -59,7 +59,9 @@ export default function CalculatorMain() {
     <Header src={GraphIcon} alt="승률 계산기" text="승률 계산기" to="/calculator"/>
     <div className=''>
       <InputPanel gameSetting={gameSetting}/>
-      <Line datasetIdKey='1' data={data} className="mt-4 w-fit"/>
+      <div className='pr-3 pl-3'>
+        <Line datasetIdKey='1' data={data}/>
+      </div>
     </div>
   </section>
 }

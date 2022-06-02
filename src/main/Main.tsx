@@ -16,11 +16,11 @@ export function MainRouter() {
 }
 
 export default function Main() {
-  return <div className="lg:flex lg:flex-row h-screen w-screen">
-    <aside className="flex-none w-full lg:w-3/12 lg:h-screen" aria-label="Sidebar">
+  return <div className="h-full lg:flex lg:min-h-screen">
+    <aside className="w-full lg:w-60 lg:flex-none" aria-label="Sidebar">
       <SideBar/>
     </aside>
-    <div className="lg:w-9/12">
+    <div className="w-full lg:w-[calc(100%-15rem)] lg:flex-none">
       <main className="ml-4 mr-4">
         <MainRouter/>
       </main>

@@ -42,7 +42,7 @@ function InputFieldContainer({children}: {children?: React.ReactNode}) {
 }
 
 export default function InputPanel({gameSetting} : {gameSetting: GameSetting}) {
-  return <div className="flex flex-row bg-white">
+  return <div className="flex flex-row bg-white mt-5 mb-5">
     <InputFieldContainer>
       <label htmlFor="num-player">플레이어 수</label>
       <InputFieldNumber name="num-player" value={gameSetting.numPlayer} onChange={(e) => gameSetting.setNumPlayer(changeEventToValue(e))}/>
