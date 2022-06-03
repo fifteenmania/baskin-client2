@@ -57,11 +57,9 @@ export default function CalculatorMain() {
   const data = loseProbMatToData(loseProbMat)
   return <section>
     <Header src={GraphIcon} alt="승률 계산기" text="승률 계산기" to="/calculator"/>
-    <div className=''>
-      <InputPanel gameSetting={gameSetting}/>
-      <div className='pr-3 pl-3'>
-        <Line datasetIdKey='1' data={data}/>
-      </div>
+    <InputPanel gameSetting={gameSetting}/>
+    <div className='pr-4 pl-4'>
+      <Line datasetIdKey='1' data={data}/>
     </div>
   </section>
 }

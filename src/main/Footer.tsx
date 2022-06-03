@@ -11,7 +11,7 @@ export default function Footer() {
   return <footer className="bg-gray-100 text-center w-full mt-10 divide-y divide-gray-300">
     <div className="w-full pt-9">
       <div className="flex justify-center mb-9 w-full">
-        <FooterIcon src={githubIcon} alt="github" href="/#!"/>
+        <FooterIcon src={githubIcon} alt="github" href="https://github.com/fifteenmania/baskin-client2"/>
         <FooterIcon src={gmailIcon} alt="gmail" href="/#!"/>
       </div>
     </div>

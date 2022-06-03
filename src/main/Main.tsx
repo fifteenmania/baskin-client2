@@ -16,6 +16,7 @@ export function MainRouter() {
 }
 
 export default function Main() {
+  // aside의 width 수정하면 하단 div 또한 수정할 것
   return <div className="h-full lg:flex lg:min-h-screen">
     <aside className="w-full lg:w-60 lg:flex-none" aria-label="Sidebar">
       <SideBar/>
