@@ -10,21 +10,24 @@ export interface GameSetting {
 export interface GameSettingAndSetters extends GameSetting {
   setNumPlayer: React.Dispatch<React.SetStateAction<number>>,
   setMaxCall: React.Dispatch<React.SetStateAction<number>>,
-  setNumEnd: React.Dispatch<React.SetStateAction<number>>
+  setNumEnd: React.Dispatch<React.SetStateAction<number>>,
+  setMyOrder: React.Dispatch<React.SetStateAction<number>>
 }
 
 export function useGameSetting(): GameSettingAndSetters {
   const [numPlayer, setNumPlayer] = useState(3);
   const [maxCall, setMaxCall] = useState(3);
   const [numEnd, setNumEnd] = useState(31);
+  const [myOrder, setMyOrder] = useState(1);
   return {
     numPlayer: numPlayer,
     maxCall: maxCall,
     numEnd: numEnd,
-    myOrder: 0,
+    myOrder: myOrder,
     setNumPlayer: setNumPlayer,
     setMaxCall: setMaxCall,
-    setNumEnd: setNumEnd
+    setNumEnd: setNumEnd,
+    setMyOrder: setMyOrder
   }
 }
 
@@ -83,7 +86,7 @@ export function InputPanelWithPlayer({gameSetting} : {gameSetting: GameSettingAn
     <InputBasicFields gameSetting={gameSetting}/>
     <InputFieldContainer>
       <InputFieldLabel htmlFor="my-turn">나의 순서</InputFieldLabel>
-      <InputFieldNumber name="my-turn" value={gameSetting.myOrder} onChange={(e) => gameSetting.setNumPlayer(changeEventToValue(e))}/>
+      <InputFieldNumber name="my-turn" value={gameSetting.myOrder} onChange={(e) => gameSetting.setMyOrder(changeEventToValue(e))}/>
     </InputFieldContainer>
   </div>
 }

@@ -21,6 +21,18 @@ export function getRandomInt(min: number, max: number): number {
 }
 
 /**
+ * `length`길이의 랜덤 정수로 구성된 배열을 반환합니다.
+ * 정수는 구간 [`min`, `max`) 에서 임의 추출됩니다. 
+ * @param length 배열의 길이
+ * @param min 정수 최솟값
+ * @param max 정수 최대값
+ * @returns 생성된 랜덤 배열
+ */
+export function getRandomIntVec(length: number, min: number, max: number): number[] {
+    return Array.from(Array(length)).map(() => getRandomInt(min, max));
+}
+
+/**
  * 
  * @param vec Input vector
  * @returns Random sample from the vector

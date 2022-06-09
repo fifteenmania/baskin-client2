@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 
-export function useMediaQuery(query: string) {
+const matchLargeQuery = "(min-width: 1024px)" as const;
+
+export function useWidthMatch(query: string): boolean {
   const [matches, setMatches] = useState(false);
   useEffect(() => {
     const media = window.matchMedia(query)
@@ -12,4 +14,8 @@ export function useMediaQuery(query: string) {
     return () => window.removeEventListener("resize", listener)
   }, [matches, query])
   return matches;
+}
+
+export function useLargeWidthMatch() {
+  return useWidthMatch(matchLargeQuery);
 }

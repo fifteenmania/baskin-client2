@@ -5,7 +5,8 @@ import GraphIcon from '../asset/graph2.svg'
 import SinglePlayIcon from '../asset/singlePlay2.svg'
 import HistoryIcon from '../asset/history.svg'
 import MenuIcon from '../asset/icons8-menu.svg'
-import { useMediaQuery } from "../hooks/useMediaQuery"
+import { useLargeWidthMatch } from "../hooks/useWidthMatch"
+import DarkToggle from "./DarkToggle"
 
 function SideBarIcon({src, alt, ...props}: {src: string, alt: string}) {
   return <img src={src} className="flex-shrink-0 w-6 h-6 drop-shadow-md" alt={alt}/>
@@ -74,7 +75,7 @@ function MobileSideBar({show} : {show: boolean}) {
 
 export default function SideBar() {
   const [mobileShow, setMobileShow] = useState(false);
-  const lgMatch = useMediaQuery("(min-width: 1024px)")
+  const lgMatch = useLargeWidthMatch();
   useEffect(() => {
     if (lgMatch) {
       setMobileShow(false)
@@ -92,6 +93,7 @@ export default function SideBar() {
         </button>
       </div>
       <DesktopSideBar/>
+      <DarkToggle />
     </div>
     <MobileSideBar show={mobileShow}/>
   </nav>
