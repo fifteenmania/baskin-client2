@@ -1,11 +1,5 @@
 import React, { useState } from "react"
-
-export interface GameSetting {
-  numPlayer: number,
-  maxCall: number,
-  numEnd: number,
-  myOrder: number
-}
+import GameSetting from "../typedef/GameSetting";
 
 export interface GameSettingAndSetters extends GameSetting {
   setNumPlayer: React.Dispatch<React.SetStateAction<number>>,
@@ -43,11 +37,22 @@ function changeEventToValue(e: React.ChangeEvent<HTMLInputElement>) {
 }
 
 function InputFieldNumber({onChange, name, value, ...props}: {onChange: React.ChangeEventHandler<HTMLInputElement>, name: string, value: number}) {
-  return <input className="bg-gray-50 border border-gray-300 text-gray-800  text-base rounded-lg focus:outline-blue-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600" type="number" onChange={onChange} value={value} name={name} {...props} />
+  return <input className="border 
+    dark:bg-gray-800
+    border-gray-300 
+    dark:border-gray-600
+    text-base 
+    rounded-lg 
+    outline-1
+    focus:outline-blue-600
+    dark:focus:outline-blue-200
+    block 
+    w-full 
+    p-2" type="number" onChange={onChange} value={value} name={name} {...props} />
 }
 
 function InputFieldLabel({htmlFor, children}: {htmlFor: string, children?: React.ReactNode}) {
-  return <label htmlFor={htmlFor} className=" text-base font-medium block text-gray-800">
+  return <label htmlFor={htmlFor} className=" text-base font-medium block text-gray-800 dark:text-gray-100">
     {children}
   </label>
 }
@@ -76,13 +81,13 @@ function InputBasicFields({gameSetting} : {gameSetting: GameSettingAndSetters}) 
 }
 
 export default function InputPanel({gameSetting} : {gameSetting: GameSettingAndSetters}) {
-  return <div className="flex flex-col bg-white mt-4 mb-4">
+  return <div className="flex flex-col mt-4 mb-4">
     <InputBasicFields gameSetting={gameSetting}/>
   </div>
 }
 
 export function InputPanelWithPlayer({gameSetting} : {gameSetting: GameSettingAndSetters}) {
-  return <div className="flex flex-col bg-white mt-4 mb-4">
+  return <div className="flex flex-col mt-4 mb-4">
     <InputBasicFields gameSetting={gameSetting}/>
     <InputFieldContainer>
       <InputFieldLabel htmlFor="my-turn">나의 순서</InputFieldLabel>

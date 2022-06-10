@@ -42,10 +42,12 @@ export default function useDarkMode() {
   const [dark, setDark] = useLocalStorage(DARK_MODE_KEY, prefersDarkMode, mapper)
 
   useEffect(() => {
-    if (window === undefined) return
+    if (window === undefined) {
+      console.warn("window is undefined")
+      return
+    }
     const root = window.document.documentElement
-    root.classList.remove(DARK_MODE.DARK)
-    root.classList.remove(DARK_MODE.LIGHT)
+    root.classList.remove(dark? DARK_MODE.LIGHT : DARK_MODE.DARK)
     root.classList.add(darkBoolToString(dark))
   }, [dark])
   return [dark, setDark] as const

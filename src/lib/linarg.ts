@@ -7,6 +7,10 @@
   return vec.reduce((lowest, current) => lowest > current ? current : lowest, Infinity);
 }
 
+export function vecFindMinIdx(vec: number[]): number {
+  return vec.reduce((lowestIdx, current, idx) => vec[lowestIdx] > current ? idx : lowestIdx, 0);
+}
+
 /**
 * 
 * @param len length of the output vector
