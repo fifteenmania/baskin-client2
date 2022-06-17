@@ -2,9 +2,9 @@ import { vecCumSum } from "./linarg";
 
 /**
  * 
- * @param min Min value.
- * @param max Max value. Excluded.
- * @returns Random float in interval [`min`, `max`) 
+ * @param min 추출 범위의 최솟값입니다.
+ * @param max 추출 범위의 최댓값입니다. 해당 값은 범위에서 제외됩니다.
+ * @returns [`min`, `max`) 의 범위에서 추출된 임의의 실수입니다.
  */
 export function getRandom(min: number, max: number): number {
     return Math.random()*(max-min) + min;
@@ -12,21 +12,19 @@ export function getRandom(min: number, max: number): number {
 
 /**
  * 
- * @param min Min value.
- * @param max Max value. Excluded.
- * @returns Random integer in interval [`min`, `max`).
+ * @param min 추출 범위의 최솟값입니다.
+ * @param max 추출 범위의 최댓값입니다. 해당 값은 범위에서 제외됩니다. 
+ * @returns [`min`, `max`) 의 범위에서 추출된 임의의 정수입니다.
  */
 export function getRandomInt(min: number, max: number): number {
     return Math.floor(getRandom(Math.ceil(min), Math.floor(max)));
 }
 
 /**
- * `length`길이의 랜덤 정수로 구성된 배열을 반환합니다.
- * 정수는 구간 [`min`, `max`) 에서 임의 추출됩니다. 
  * @param length 배열의 길이
  * @param min 정수 최솟값
- * @param max 정수 최대값
- * @returns 생성된 랜덤 배열
+ * @param max 정수 최댓값
+ * @returns [`min`, `max`) 에서 임의 추출된 `length`개의 정수로 구성된 벡터입니다.
  */
 export function getRandomIntVec(length: number, min: number, max: number): number[] {
     return Array.from(Array(length)).map(() => getRandomInt(min, max));
@@ -34,8 +32,8 @@ export function getRandomIntVec(length: number, min: number, max: number): numbe
 
 /**
  * 
- * @param vec Input vector
- * @returns Random sample from the vector
+ * @param vec 추출 대상이 되는 벡터입니다.
+ * @returns 대상 벡터에서 임의 추출된 하나의 수입니다.
  */
 export function randomSampleOne(vec: number[]): number {
     const pickedIdx = getRandomInt(0, vec.length);
@@ -44,10 +42,10 @@ export function randomSampleOne(vec: number[]): number {
 
 /**
  * 
- * @param chooseProb normalized vector of choose probability
- * @returns random sample of index rate proportional to `vec`
+ * @param chooseProb 각 인덱스별로 추출될 확률로 구성된 벡터입니다. 예를 들어 [0.5, 0, 0.5]의 입력을 받으면 50% 확률로 0 또는 2 의 값이 추출됩니다. 합이 1로 정규화되어 있어야 합니다.
+ * @returns 입력 벡터에 따라 추출된 인덱스 정수입니다.
  */
-export function getRandomIntAsVec(chooseProb: number[]): number {
+export function getRandomIndex(chooseProb: number[]): number {
     const cumsum = vecCumSum(chooseProb);
     const rand = Math.random();
     var i = 0;
@@ -66,9 +64,9 @@ export function getRandomIntAsVec(chooseProb: number[]): number {
 
 /**
  * 
- * @param len length of the array
- * @returns `len` of array filled with random number
+ * @param len 출력할 벡터의 길이입니다.
+ * @returns [0, 1) 의 범위에서 추출된 난수로 구성된 `len` 길이의 벡터입니다.
  */
-export function randomArray(len: number): number[] {
+export function getRandomVec(len: number): number[] {
     return Array.from(Array(len)).map((_) => Math.random());
 }

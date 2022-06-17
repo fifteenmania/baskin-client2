@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BrowserStorage from "../class/BrowserStorage";
 import BrowserStorageMapper from "../class/BrowserStorageMapper";
 
 /**
  * 
  * @param key localStorage에서 사용할 state의 key 값
- * @param initialValue state의 초기값
+ * @param initialValue state의 초기값. localStorage에 저정된 초기값이 없으면 사용됨.
  * @param mapper string과 state의 값 간에 변환을 위한 BrowserStorageMapper 객체
  * @returns [state, setState]. state는 localStorage에 저장되는 상태, setState는 state update를 위한 함수.
  */

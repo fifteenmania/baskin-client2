@@ -1,29 +1,7 @@
 import React, { useState } from "react"
+import { GameSettingActionsKind, GameSettingDispatch } from "../hooks/useGameSetting";
 import GameSetting from "../typedef/GameSetting";
-
-export interface GameSettingAndSetters extends GameSetting {
-  setNumPlayer: React.Dispatch<React.SetStateAction<number>>,
-  setMaxCall: React.Dispatch<React.SetStateAction<number>>,
-  setNumEnd: React.Dispatch<React.SetStateAction<number>>,
-  setMyOrder: React.Dispatch<React.SetStateAction<number>>
-}
-
-export function useGameSetting(): GameSettingAndSetters {
-  const [numPlayer, setNumPlayer] = useState(3);
-  const [maxCall, setMaxCall] = useState(3);
-  const [numEnd, setNumEnd] = useState(31);
-  const [myOrder, setMyOrder] = useState(1);
-  return {
-    numPlayer: numPlayer,
-    maxCall: maxCall,
-    numEnd: numEnd,
-    myOrder: myOrder,
-    setNumPlayer: setNumPlayer,
-    setMaxCall: setMaxCall,
-    setNumEnd: setNumEnd,
-    setMyOrder: setMyOrder
-  }
-}
+import GameSettingAndSetters from "../typedef/GameSettingAndSetters";
 
 function changeEventToValue(e: React.ChangeEvent<HTMLInputElement>) {
   const value = parseInt(e.target.value);
@@ -63,35 +41,35 @@ function InputFieldContainer({children}: {children?: React.ReactNode}) {
   </div>
 }
 
-function InputBasicFields({gameSetting} : {gameSetting: GameSettingAndSetters}) {
+function InputBasicFields({gameSetting, dispatch} : {gameSetting: GameSetting, dispatch: GameSettingDispatch}) {
   return <>
   <InputFieldContainer>
       <InputFieldLabel htmlFor="num-player">플레이어 수</InputFieldLabel>
-      <InputFieldNumber name="num-player" value={gameSetting.numPlayer} onChange={(e) => gameSetting.setNumPlayer(changeEventToValue(e))}/>
+      <InputFieldNumber name="num-player" value={gameSetting.numPlayer} onChange={(e) => dispatch({type: GameSettingActionsKind.SET_NUM_PLAYER, payload: e.target.value})}/>
     </InputFieldContainer>
     <InputFieldContainer>
       <InputFieldLabel htmlFor="max-call">한 번에 부르는 최대 수</InputFieldLabel>
-      <InputFieldNumber name="max-call" value={gameSetting.maxCall} onChange={(e) => gameSetting.setMaxCall(changeEventToValue(e))}/>
+      <InputFieldNumber name="max-call" value={gameSetting.maxCall} onChange={(e) => dispatch({type: GameSettingActionsKind.SET_MAX_CALL, payload: e.target.value})}/>
     </InputFieldContainer>
     <InputFieldContainer>
       <InputFieldLabel htmlFor="num-end">마지막 숫자</InputFieldLabel>
-      <InputFieldNumber name="num-end" value={gameSetting.numEnd} onChange={(e) => gameSetting.setNumEnd(changeEventToValue(e))}/>
+      <InputFieldNumber name="num-end" value={gameSetting.numEnd} onChange={(e) => dispatch({type: GameSettingActionsKind.SET_NUM_END, payload: e.target.value})}/>
     </InputFieldContainer>
   </>
 }
 
-export default function InputPanel({gameSetting} : {gameSetting: GameSettingAndSetters}) {
+export default function InputPanel({gameSetting, dispatch} : {gameSetting: GameSetting, dispatch: GameSettingDispatch}) {
   return <div className="flex flex-col mt-4 mb-4">
-    <InputBasicFields gameSetting={gameSetting}/>
+    <InputBasicFields gameSetting={gameSetting} dispatch={dispatch}/>
   </div>
 }
 
-export function InputPanelWithPlayer({gameSetting} : {gameSetting: GameSettingAndSetters}) {
+export function InputPanelWithPlayer({gameSetting, dispatch} : {gameSetting: GameSetting, dispatch: GameSettingDispatch}) {
   return <div className="flex flex-col mt-4 mb-4">
-    <InputBasicFields gameSetting={gameSetting}/>
+    <InputBasicFields gameSetting={gameSetting} dispatch={dispatch}/>
     <InputFieldContainer>
       <InputFieldLabel htmlFor="my-turn">나의 순서</InputFieldLabel>
-      <InputFieldNumber name="my-turn" value={gameSetting.myOrder} onChange={(e) => gameSetting.setMyOrder(changeEventToValue(e))}/>
+      <InputFieldNumber name="my-turn" value={gameSetting.myOrder+1} onChange={(e) => dispatch({type: GameSettingActionsKind.SET_MY_ORDER, payload: e.target.value})}/>
     </InputFieldContainer>
   </div>
 }

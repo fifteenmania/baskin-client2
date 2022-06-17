@@ -38,8 +38,6 @@ export function getLookupMatRev(loseMat: number[][], maxCall: number, currentNum
  * @param loseMat 
  * @param maxCall 
  * @param currentNum 
- * @param options
- * @param options.vecModifier Apply modifier to lose rate vector. For setting kill target, improving player win rate, etc.
  * @returns (Modified) Lose rate vector regarding `loseMat`. 
  */
 export function getLoseVec(loseMat: number[][], maxCall: number, currentNum: number): number[] {
@@ -57,23 +55,27 @@ export function getLoseVecRev(loseMat: number[][], maxCall: number, currentNum: 
 /**
  * 
  * @param numPlayer Number of players
- * @param maxCount Maximam number of numbers player can call on his turn.
+ * @param maxCall Maximam number of numbers player can call on his turn.
  * @param numEnd Final number of the game.
  * @returns ((`numEnd` + 1) x (`numPlayer`)) lose probability matrix. 
  */
 export function getFullLoseProbMat(numPlayer: number, maxCall: number, numEnd: number): number[][] {
-    const loseMat = [];
-    const initial = getUnitVec(numPlayer);
-    loseMat.push(initial);
-    for (var currentNum=numEnd-1; currentNum>=0; currentNum--) {
-        const lookupMat = getLookupMatRev(loseMat, maxCall, currentNum, numEnd);
-        
-        const loseVec = lookupMat.map((lookupMatRow) => lookupMatRow[0]);
-        const chooseProb = getChooseProb(loseVec);
+    try{
+        const loseMat = [];
+        const initial = getUnitVec(numPlayer);
+        loseMat.push(initial);
+        for (var currentNum=numEnd-1; currentNum>=0; currentNum--) {
+            const lookupMat = getLookupMatRev(loseMat, maxCall, currentNum, numEnd);
+            
+            const loseVec = lookupMat.map((lookupMatRow) => lookupMatRow[0]);
+            const chooseProb = getChooseProb(loseVec);
 
-        const lookupMatShifted = matShiftToLast(lookupMat);
-        const nextLoseVec = vecMatDot(chooseProb, lookupMatShifted);
-        loseMat.push(nextLoseVec);
+            const lookupMatShifted = matShiftToLast(lookupMat);
+            const nextLoseVec = vecMatDot(chooseProb, lookupMatShifted);
+            loseMat.push(nextLoseVec);
+        }
+        return loseMat.reverse();
+    } catch (e) {
+        return [[]]
     }
-    return loseMat.reverse();
 }
