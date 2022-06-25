@@ -1,5 +1,5 @@
-import githubIcon from '../asset/github.svg';
-import gmailIcon from '../asset/gmail.svg';
+import githubIcon from 'asset/github.svg';
+import gmailIcon from 'asset/gmail.svg';
 
 function FooterIcon({href, src, alt} : {href: string, src: string, alt: string}) {
   return <a className='mr-9 text-gray-800 dark:text-gray-50' href={href}>

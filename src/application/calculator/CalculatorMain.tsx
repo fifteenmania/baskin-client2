@@ -9,11 +9,11 @@ import {
   Legend,
 } from 'chart.js'
 import { Line } from "react-chartjs-2";
-import InputPanel from '../component/InputPanel';
-import { getFullLoseProbMat } from '../lib/strategy';
-import Header from '../component/Header'
-import GraphIcon from '../asset/graph2.svg'
-import useGameSetting from '../hooks/useGameSetting';
+import InputPanel from 'component/InputPanel';
+import { getFullLoseProbMat } from 'lib/strategy';
+import Header from 'component/Header'
+import GraphIcon from 'asset/graph2.svg'
+import useGameSetting from 'hooks/useGameSetting';
 
 ChartJS.register(
   CategoryScale,

@@ -1,6 +1,6 @@
 
-import HistoryIcon from '../asset/history.svg'
-import Header from '../component/Header'
+import HistoryIcon from 'asset/history.svg'
+import Header from 'component/Header'
 
 export default function HistoryMain() {
   return <section>

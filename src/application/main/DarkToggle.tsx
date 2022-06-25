@@ -1,5 +1,5 @@
-import ToggleButton from "../component/ToggleButton"
-import useDarkMode from "../hooks/useDarkMode"
+import ToggleButton from "component/ToggleButton"
+import useDarkMode from "hooks/useDarkMode"
 
 export default function DarkToggle() {
   const [isDark, setIsDark] = useDarkMode()

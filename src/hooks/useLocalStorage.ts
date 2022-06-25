@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import BrowserStorage from "../class/BrowserStorage";
 import BrowserStorageMapper from "../class/BrowserStorageMapper";
 

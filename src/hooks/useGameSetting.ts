@@ -1,6 +1,5 @@
-import React, { useReducer, useState } from "react";
+import React, { useReducer } from "react";
 import GameSetting from "../typedef/GameSetting";
-import GameSettingAndSetters from "../typedef/GameSettingAndSetters";
 
 export enum GameSettingActionsKind {
   SET_NUM_PLAYER = 'SET_NUM_PLAYER',

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 //import {ReactComponent as MenuIcon} from '../asset/icons8-menu.svg'
-import GraphIcon from '../asset/graph2.svg'
-import SinglePlayIcon from '../asset/singlePlay2.svg'
-import HistoryIcon from '../asset/history.svg'
-import MenuIcon from '../asset/icons8-menu.svg'
-import { useLargeWidthMatch } from "../hooks/useWidthMatch"
+import GraphIcon from 'asset/graph2.svg'
+import SinglePlayIcon from 'asset/singlePlay2.svg'
+import HistoryIcon from 'asset/history.svg'
+import MenuIcon from 'asset/icons8-menu.svg'
+import { useLargeWidthMatch } from "hooks/useWidthMatch"
 import DarkToggle from "./DarkToggle"
 
 function SideBarIcon({src, alt, ...props}: {src: string, alt: string}) {

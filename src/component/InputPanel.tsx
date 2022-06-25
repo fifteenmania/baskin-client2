@@ -1,7 +1,6 @@
-import React, { useState } from "react"
+import React from "react"
 import { GameSettingActionsKind, GameSettingDispatch } from "../hooks/useGameSetting";
 import GameSetting from "../typedef/GameSetting";
-import GameSettingAndSetters from "../typedef/GameSettingAndSetters";
 
 function changeEventToValue(e: React.ChangeEvent<HTMLInputElement>) {
   const value = parseInt(e.target.value);

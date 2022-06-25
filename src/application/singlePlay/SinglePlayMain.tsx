@@ -1,9 +1,9 @@
-import Header from "../component/Header";
-import SinglePlayIcon from '../asset/singlePlay2.svg'
-import { InputPanelWithPlayer } from "../component/InputPanel";
+import Header from "component/Header";
+import SinglePlayIcon from 'asset/singlePlay2.svg'
+import { InputPanelWithPlayer } from "component/InputPanel";
 import { useState } from "react";
 import GameBoard from "./GameBoard";
-import useGameSetting from "../hooks/useGameSetting";
+import useGameSetting from "hooks/useGameSetting";
 
 export default function SinglePlayMain() {
   const [gameSetting, settingDispatch] = useGameSetting()
