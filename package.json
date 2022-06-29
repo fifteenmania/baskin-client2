@@ -24,6 +24,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "deploy": "npx push-dir --dir=build --branch=gh-pages --cleanup --force",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -49,6 +50,7 @@
     "http-server": "^14.1.1",
     "mock-local-storage": "^1.1.23",
     "postcss": "^8.4.14",
+    "push-dir": "^0.4.1",
     "tailwindcss": "^3.0.24"
   }
 }

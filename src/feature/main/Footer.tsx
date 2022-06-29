@@ -1,9 +1,11 @@
-import githubIcon from 'asset/github.svg';
-import gmailIcon from 'asset/gmail.svg';
+import { GithubIcon } from "asset/assets"
+import { GmailIcon } from "asset/assets"
 
-function FooterIcon({href, src, alt} : {href: string, src: string, alt: string}) {
+function FooterIcon({href, svg} : {href: string, svg: React.ReactNode}) {
   return <a className='mr-9 text-gray-800 dark:text-gray-50' href={href}>
-    <img src={src} alt={alt} className="w-5"/>
+    <svg className='w-5 h-5 dark:fill-white'>
+      {svg}
+    </svg>
   </a>
 }
 
@@ -11,8 +13,8 @@ export default function Footer() {
   return <footer className="bg-gray-100 dark:bg-gray-900 text-center w-full mt-10 divide-y divide-gray-300 dark:divide-gray-700">
     <div className="w-full pt-9">
       <div className="flex justify-center mb-9 w-full">
-        <FooterIcon src={githubIcon} alt="github" href="https://github.com/fifteenmania/baskin-client2"/>
-        <FooterIcon src={gmailIcon} alt="gmail" href="/#!"/>
+        <FooterIcon svg={<GithubIcon/>} href="https://github.com/fifteenmania/baskin-client2"/>
+        <FooterIcon svg={<GmailIcon/>} href="mailto:ktthee1995@gmail.com"/>
       </div>
     </div>
     <div className="text-gray-700 dark:text-gray-100 text-center p-4 w-full">

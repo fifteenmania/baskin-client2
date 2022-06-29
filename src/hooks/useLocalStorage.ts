@@ -1,36 +1,54 @@
-import { useState } from "react";
-import BrowserStorage from "../class/BrowserStorage";
-import BrowserStorageMapper from "../class/BrowserStorageMapper";
+import { useEffect, useState } from "react";
 
 /**
- * 
- * @param key localStorage에서 사용할 state의 key 값
- * @param initialValue state의 초기값. localStorage에 저정된 초기값이 없으면 사용됨.
- * @param mapper string과 state의 값 간에 변환을 위한 BrowserStorageMapper 객체
- * @returns [state, setState]. state는 localStorage에 저장되는 상태, setState는 state update를 위한 함수.
+ * localStorage api wrapper. 다른 컴포넌트에서 값을 수정해도 자동으로 값을 업데이트함.
+ * 일반적인 react state와 유사하게 localstorage 값을 사용하도록 해 줌.
+ * @param key localStorage 에서 사용할 state의 key 값
+ * @param initialValue state의 초기값. localStorage 에 이미 저장된 초기값이 있다면 무시됨.
+ * @param valToString state 를 string 으로 변환하는 함수
+ * @param stringToVal string 을 state 로 변환하는 함수
+ * @returns [  
+ *  `state`, // localStorage에 저장되는 상태  
+ *  `setState` // state update를 위한 함수 (state: V) => void  
+ * ]
  */
-export default function useLocalStorage<K extends string, V>(key: K, initialValue: V, mapper: BrowserStorageMapper<V>) {
-  const getStorage = () => window.localStorage;
-  const browserStorage = new BrowserStorage<K, V>(getStorage, mapper)
-  const [storedValue, setStoredValue] = useState(() => {
+export default function useLocalStorage<T>(key: string, initialValue: T, valToString: (val: T) => string, stringToVal: (str: string) => T) {
+  const storage = window.localStorage;
+  const [value, setValue] = useState<T>(() => {
     try {
-      const item = browserStorage.get(key);
-      return item? item : initialValue;
+      const item = storage.getItem(key);
+      return item? stringToVal(item) : initialValue;
     } catch (error) {
-      console.log(error)
+      console.error(error)
       return initialValue;
     }
-  })
-  
-  const setValue = (value: (V | ((prevVal: V) => V))) => {
+  });
+
+  const dispatchStorgeEvent = (oldValue: T, newValue: T) => {window.dispatchEvent(new StorageEvent('storage', {key, oldValue: valToString(oldValue), newValue: valToString(newValue)}))}
+
+  const setSafeValue = (newVal: T) => {
     try {
-      const valueToStore = value instanceof Function ? value(storedValue) : value;
-      setStoredValue(valueToStore);
-      browserStorage.set(key, valueToStore);
+      storage.setItem(key, valToString(newVal));
+      dispatchStorgeEvent(value, newVal);
+      setValue(newVal);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
-  return [storedValue, setValue] as const;
+  useEffect(() => {
+    const handler = (event: StorageEvent) => {
+      if (event.key === key) {
+        if (event.newValue === null) {
+          setValue(initialValue);
+          return;
+        }
+        setValue(stringToVal(event.newValue));
+      }
+    }
+    window.addEventListener('storage', handler);
+    return () => window.removeEventListener('storage', handler);
+  }, [initialValue, key, stringToVal, valToString]);
+
+  return [value, setSafeValue] as const;
 }

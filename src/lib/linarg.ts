@@ -19,6 +19,15 @@ export function vecFindMinIdx(vec: number[]): number {
 /**
  * 
  * @param vec 입력 벡터입니다.
+ * @returns `vec` 내부에서 최댓값을 가지는 인덱스를 찾습니다. 최댓값이 여러 개일 경우 가장 처음의 값을 반환합니다.
+ */
+export function vecFindMaxIdx(vec: number[]): number {
+  return vec.reduce((highestIdx, current, idx) => current > vec[highestIdx] ? idx : highestIdx, 0);
+}
+
+/**
+ * 
+ * @param vec 입력 벡터입니다.
  * @param absTol 실수 비교 연산에서의 반올림 오차 허용값입니다. 차이가 이 값보다 크지 않을 경우 같은 값으로 취급합니다. 
  * @returns `vec`에서 최솟값을 가지는 인덱스에서만 양의 값을 가지는 벡터입니다. 내부 값은 1/(입력 벡터의 최솟값의 수) 입니다. 예를 들어 `vec`이 [0, 1, 0] 일 경우 [0.5, 0, 0.5]를 반홥합니다.
  */
@@ -59,6 +68,15 @@ export function vecShiftToLast(vec: number[]): number[] {
   }
   const copied = vec.slice(0, -1)
   copied.unshift(vec[vec.length - 1]);
+  return copied
+}
+
+export function vecShiftToFirst(vec: number[]): number[] {
+  if (vec.length <= 1) {
+      return vec;
+  }
+  const copied = vec.slice(1)
+  copied.push(vec[0]);
   return copied
 }
 

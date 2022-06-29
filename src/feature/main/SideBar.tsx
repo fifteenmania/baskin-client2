@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from "react"
+import { ReactNode, useState } from "react"
 import { Link } from "react-router-dom"
-//import {ReactComponent as MenuIcon} from '../asset/icons8-menu.svg'
-import GraphIcon from 'asset/graph2.svg'
-import SinglePlayIcon from 'asset/singlePlay2.svg'
-import HistoryIcon from 'asset/history.svg'
-import MenuIcon from 'asset/icons8-menu.svg'
-import { useLargeWidthMatch } from "hooks/useWidthMatch"
+import { SinglePlayIcon } from "asset/assets"
+import { GraphIcon } from "asset/assets"
+import { HistoryIcon } from "asset/assets"
+import { MenuIcon } from "asset/assets"
 import DarkToggle from "./DarkToggle"
 
-function SideBarIcon({src, alt, ...props}: {src: string, alt: string}) {
-  return <img src={src} className="flex-shrink-0 w-6 h-6 drop-shadow-md dark:invert dark:brightness-200" alt={alt}/>
+function SideBarIcon({svg, ...props}: {svg: ReactNode}) {
+  return <svg className="w-6 h-6 dark:fill-white" {...props}>
+    {svg}
+  </svg>
 }
 
-function SidebarItemText({children}: {children?: React.ReactNode}) {
+function SidebarItemText({children}: {children?: ReactNode}) {
   return <span className="flex-1 ml-3 whitespace-nowrap">{children}</span> 
 }
 
 function SideBarItem({children, to, ...props}: 
-    {to: string, children?: React.ReactNode}) {
+    {to: string, children?: ReactNode}) {
   return <li>
     <Link to={to} className="flex items-center p-2 text-base font-semibold hover:font-bold 
       text-gray-800 
@@ -37,45 +37,54 @@ function DesktopSideBar() {
   return <div className="hidden lg:block">
     <ul className="space-y-2">
       <SideBarItem to="/calculator">
-        <SideBarIcon src={GraphIcon} alt="승률 계산기"/>
+        <SideBarIcon svg={<GraphIcon/>}/>
         <SidebarItemText>승률 계산기</SidebarItemText>
       </SideBarItem>
       <SideBarItem to="/single-play">
-        <SideBarIcon src={SinglePlayIcon} alt="컴퓨터와 플레이"/>
+        <SideBarIcon svg={<SinglePlayIcon/>}/>
         <SidebarItemText>컴퓨터와 플레이</SidebarItemText>
       </SideBarItem>
       <SideBarItem to="/history">
-        <SideBarIcon src={HistoryIcon} alt="대전 기록"/>
+        <SideBarIcon svg={<HistoryIcon/>}/>
         <SidebarItemText>대전 기록</SidebarItemText>
       </SideBarItem>
     </ul>
   </div>
 }
 
-function MobileSideBarText({children}: {children?: React.ReactNode}) {
-  return <span className="whitespace-nowrap text-xl p-3">{children}</span> 
+function MobileSideBarIcon({svg, ...props}: {svg: ReactNode}) {
+  return <svg className="w-7 h-7 dark:fill-white" {...props}>
+    {svg}
+  </svg>
+}
+
+function MobileSideBarText({children}: {children?: ReactNode}) {
+  return <div className="whitespace-nowrap text-xl p-3">{children}</div> 
 }
 
 function MobileSideBarItem({children, to, ...props}: 
-    {to: string, children?: React.ReactNode}) {
-  return <Link to={to} className="w-full h-full transition hover:bg-gray-200 dark:hover:bg-primary-800 rounded-lg hover:font-semibold ">
-    <li className="w-full">
+    {to: string, children?: ReactNode}) {
+  return <Link to={to} className=" w-full h-full hover:bg-gray-200 dark:hover:bg-primary-800 rounded-lg hover:font-semibold ">
+    <li className="w-full flex flex-row flex-nowrap justify-between align-middle">
       {children}
     </li>
   </Link>
 }
 
 function MobileSideBar({show} : {show: boolean}) {
-  return <div className="lg:hidden transition-all" style={{"display": show? "block" : "none"}}>
-    <ul className="my-6 pb-8 flex flex-col space-y-3 border-b-2">
+  return <div className="lg:hidden">
+    <ul className="my-5 pb-5 flex flex-col space-y-1 border-b-2">
       <MobileSideBarItem to="/calculator">
         <MobileSideBarText>승률 계산기</MobileSideBarText>
+        <MobileSideBarIcon svg={<GraphIcon/>}/>
       </MobileSideBarItem>
       <MobileSideBarItem to="/single-play">
         <MobileSideBarText>컴퓨터와 플레이</MobileSideBarText>
+        <MobileSideBarIcon svg={<SinglePlayIcon/>}/>
       </MobileSideBarItem>
       <MobileSideBarItem to="/history">
         <MobileSideBarText>대전 기록</MobileSideBarText>
+        <MobileSideBarIcon svg={<HistoryIcon/>}/>
       </MobileSideBarItem>
     </ul>
   </div>
@@ -83,12 +92,6 @@ function MobileSideBar({show} : {show: boolean}) {
 
 export default function SideBar() {
   const [mobileShow, setMobileShow] = useState(false);
-  const lgMatch = useLargeWidthMatch();
-  useEffect(() => {
-    if (lgMatch) {
-      setMobileShow(false)
-    }
-  }, [lgMatch])
   return <nav className="h-full w-full">
     <div className="bg-secondary-100 dark:bg-gray-800 rounded border-b-2 lg:border-0 border-b-200  h-full">
       <div className="overflow-y-auto py-6 mb-4 px-3 flex justify-between">
@@ -97,7 +100,9 @@ export default function SideBar() {
           <h1 className="self-center text-xl font-semibold whitespace-nowrap transition hover:font-extrabold text-gray-800 dark:text-primary-50">써리원 시뮬레이터</h1>
         </Link>
         <button type="button" className="accordion-button lg:hidden" onClick={() => setMobileShow((mobileShow) => !mobileShow)}>
-          <img src={MenuIcon} alt="메뉴 아이콘"/>
+          <svg className="w-6 h-6">
+            <MenuIcon/>
+          </svg>
         </button>
       </div>
       <DesktopSideBar/>
@@ -105,6 +110,6 @@ export default function SideBar() {
         <DarkToggle />
       </div>
     </div>
-    <MobileSideBar show={mobileShow}/>
+    {mobileShow? <MobileSideBar show={mobileShow}/> : null}
   </nav>
 }
