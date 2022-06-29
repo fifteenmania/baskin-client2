@@ -6,4 +6,4 @@
 - 대전 기록을 볼 수 있습니다.
 
 ##  게임하러 가기
-깃헙 페이지에 호스팅 중! 아무것도 설치하지 않고 웹에서 즐겨요. [바로가기]("https://fifteenmania.github.io/baskin-client2/")
+깃헙 페이지에 호스팅 중! 아무것도 설치하지 않고 웹에서 즐겨요. [바로가기](https://fifteenmania.github.io/baskin-client2/)
