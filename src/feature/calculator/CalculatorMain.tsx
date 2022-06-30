@@ -27,7 +27,13 @@ export default function CalculatorMain() {
       <p>게임 설정에 따른 이론적 승률을 계산해줍니다.</p>
     </Description>
     <InputPanel gameSetting={gameSetting} dispatch={settingDispatch}/>
-    <NumberIndicator loseProbMat={loseProbMat} darkMode={dark}/>
-    <StartingIndicator loseProbAtZero={vecShiftToFirst(loseProbMat[0])}/>
+    <div className='flex flex-row flex-wrap'>
+      <article className='max-w-3xl mb-4'>
+        <NumberIndicator loseProbMat={loseProbMat} darkMode={dark}/>
+      </article>
+      <article className='max-w-3xl'>
+        <StartingIndicator loseProbAtZero={vecShiftToFirst(loseProbMat[0])}/>
+      </article>
+    </div>
   </section>
 }

@@ -2,17 +2,6 @@ import React from "react"
 import { GameSettingActionsKind, GameSettingDispatch } from "../hooks/useGameSetting";
 import GameSetting from "../typedef/GameSetting";
 
-function changeEventToValue(e: React.ChangeEvent<HTMLInputElement>) {
-  const value = parseInt(e.target.value);
-  if (isNaN(value)) {
-    return 1
-  }
-  if (value <= 0) {
-    return 1
-  }
-  return value
-}
-
 function InputFieldNumber({onChange, name, value, ...props}: {onChange: React.ChangeEventHandler<HTMLInputElement>, name: string, value: number}) {
   return <input className="border 
     dark:bg-gray-800
