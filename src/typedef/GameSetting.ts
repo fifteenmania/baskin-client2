@@ -5,3 +5,9 @@ export default interface GameSetting {
   myOrder: number
 }
 
+export interface GameSettingInput {
+  numPlayer: string,
+  maxCall: string,
+  numEnd: string,
+  myOrder: string
+}

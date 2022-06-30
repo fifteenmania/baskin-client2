@@ -1,8 +1,8 @@
 import React from "react"
 import { GameSettingActionsKind, GameSettingDispatch } from "../hooks/useGameSetting";
-import GameSetting from "../typedef/GameSetting";
+import { GameSettingInput } from "../typedef/GameSetting";
 
-function InputFieldNumber({onChange, name, value, ...props}: {onChange: React.ChangeEventHandler<HTMLInputElement>, name: string, value: number}) {
+function InputFieldNumber({onChange, name, value, ...props}: {onChange: React.ChangeEventHandler<HTMLInputElement>, name: string, value: string}) {
   return <input className="border 
     dark:bg-gray-800
     border-gray-300 
@@ -29,7 +29,7 @@ function InputFieldContainer({children}: {children?: React.ReactNode}) {
   </div>
 }
 
-function InputBasicFields({gameSetting, dispatch} : {gameSetting: GameSetting, dispatch: GameSettingDispatch}) {
+function InputBasicFields({gameSetting, dispatch} : {gameSetting: GameSettingInput, dispatch: GameSettingDispatch}) {
   return <>
   <InputFieldContainer>
       <InputFieldLabel htmlFor="num-player">플레이어 수</InputFieldLabel>
@@ -46,18 +46,18 @@ function InputBasicFields({gameSetting, dispatch} : {gameSetting: GameSetting, d
   </>
 }
 
-export default function InputPanel({gameSetting, dispatch} : {gameSetting: GameSetting, dispatch: GameSettingDispatch}) {
+export default function InputPanel({gameSetting, dispatch} : {gameSetting: GameSettingInput, dispatch: GameSettingDispatch}) {
   return <div className="flex flex-col mt-4 mb-4">
     <InputBasicFields gameSetting={gameSetting} dispatch={dispatch}/>
   </div>
 }
 
-export function InputPanelWithPlayer({gameSetting, dispatch} : {gameSetting: GameSetting, dispatch: GameSettingDispatch}) {
+export function InputPanelWithPlayer({gameSetting, dispatch} : {gameSetting: GameSettingInput, dispatch: GameSettingDispatch}) {
   return <div className="flex flex-col mt-4 mb-4">
     <InputBasicFields gameSetting={gameSetting} dispatch={dispatch}/>
     <InputFieldContainer>
       <InputFieldLabel htmlFor="my-turn">나의 순서</InputFieldLabel>
-      <InputFieldNumber name="my-turn" value={gameSetting.myOrder+1} onChange={(e) => dispatch({type: GameSettingActionsKind.SET_MY_ORDER, payload: e.target.value})}/>
+      <InputFieldNumber name="my-turn" value={gameSetting.myOrder} onChange={(e) => dispatch({type: GameSettingActionsKind.SET_MY_ORDER, payload: e.target.value})}/>
     </InputFieldContainer>
   </div>
 }

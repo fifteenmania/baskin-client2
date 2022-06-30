@@ -6,7 +6,7 @@ import InputPanel from 'component/InputPanel';
 import { getFullLoseProbMat } from 'lib/strategy';
 import Header from 'component/Header'
 import { GraphIcon } from 'asset/assets';
-import useGameSetting from 'hooks/useGameSetting';
+import useGameSetting, { GameSettingInputToGameSetting } from 'hooks/useGameSetting';
 import useDarkMode from 'hooks/useDarkMode';
 import Description from 'component/Description';
 import StartingIndicator from './StartingIndicator';
@@ -18,7 +18,8 @@ ChartJS.register(
 )
 
 export default function CalculatorMain() {
-  const [gameSetting, settingDispatch] = useGameSetting();
+  const [gameSettingInput, settingDispatch] = useGameSetting();
+  const gameSetting = GameSettingInputToGameSetting(gameSettingInput);
   const loseProbMat = getFullLoseProbMat(gameSetting.numPlayer, gameSetting.maxCall, gameSetting.numEnd);
   const [dark, ] = useDarkMode();
   return <section>
@@ -26,7 +27,7 @@ export default function CalculatorMain() {
     <Description>
       <p>게임 설정에 따른 이론적 승률을 계산해줍니다.</p>
     </Description>
-    <InputPanel gameSetting={gameSetting} dispatch={settingDispatch}/>
+    <InputPanel gameSetting={gameSettingInput} dispatch={settingDispatch}/>
     <div className='flex flex-row flex-wrap'>
       <article className='max-w-3xl mb-4'>
         <NumberIndicator loseProbMat={loseProbMat} darkMode={dark}/>
