@@ -79,7 +79,7 @@ const initialSetting: GameSettingInput = {
   numEnd: "31",
   numPlayer: "3",
   maxCall: "3",
-  myOrder: "0"
+  myOrder: "1"
 }
 
 export default function useGameSetting(): [GameSettingInput, GameSettingDispatch] {

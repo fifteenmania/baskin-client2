@@ -17,7 +17,7 @@ function SidebarItemText({children}: {children?: ReactNode}) {
 }
 
 function SideBarItem({children, to, ...props}: 
-    {to: string, children?: ReactNode}) {
+    {to: string, children?: ReactNode, [x: string]: any}) {
   return <li>
     <Link to={to} className="flex items-center p-2 text-base font-semibold hover:font-bold 
       text-gray-800 
@@ -27,7 +27,7 @@ function SideBarItem({children, to, ...props}:
       dark:hover:text-primary-200 
       transition 
       hover:bg-primary-200 
-      dark:hover:bg-primary-800" {...props}>
+      dark:hover:bg-primary-800" role={"navigation"} {...props}>
       {children}
     </Link>
   </li>
@@ -64,7 +64,7 @@ function MobileSideBarText({children}: {children?: ReactNode}) {
 
 function MobileSideBarItem({children, to, ...props}: 
     {to: string, children?: ReactNode}) {
-  return <Link to={to} className=" w-full h-full hover:bg-gray-200 dark:hover:bg-primary-800 rounded-lg hover:font-semibold ">
+  return <Link to={to} className=" w-full h-full hover:bg-gray-200 dark:hover:bg-primary-800 rounded-lg hover:font-semibold " role={"navigation"}>
     <li className="w-full flex flex-row flex-nowrap justify-between align-middle">
       {children}
     </li>
@@ -96,11 +96,11 @@ export default function SideBar() {
     <div className="bg-secondary-100 dark:bg-gray-800 rounded border-b-2 lg:border-0 border-b-200  h-full">
       <div className="overflow-y-auto py-6 mb-4 px-3 flex justify-between">
         <Link to="/" className="flex items-center ">
-          <img className="h-7 mr-3" src="https://picsum.photos/30" alt="베스킨라빈스 아이콘"/>
+          <img className="h-7 w-7 mr-3" src="https://picsum.photos/30" alt="베스킨라빈스 아이콘" loading="lazy"/>
           <h1 className="self-center text-xl font-semibold whitespace-nowrap transition hover:font-extrabold text-gray-800 dark:text-primary-50">써리원 시뮬레이터</h1>
         </Link>
         <button type="button" className="accordion-button lg:hidden" onClick={() => setMobileShow((mobileShow) => !mobileShow)}>
-          <svg className="w-6 h-6">
+          <svg className="w-6 h-6" role="button">
             <MenuIcon/>
           </svg>
         </button>

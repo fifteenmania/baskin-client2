@@ -16,7 +16,7 @@ function loseProbMatToData(loseProbMat: number[][], darkMode: boolean) {
 }
 
 export default function NumberIndicator({loseProbMat, darkMode} : {loseProbMat: number[][], darkMode: boolean}) {
-  return <div className='pr-4 pl-4'>
+  return <div>
     <h2 className=' text-2xl'>숫자별 승률 분석</h2>
     <p>세로축(높이)는 각 숫자에서 끝냈을 때 승률을 나타냅니다.</p>
     <p>자신 턴에서 말할 수 있는 숫자 중 가장 승률이 높은 숫자까지 말하면 됩니다.</p> 
