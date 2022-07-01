@@ -71,7 +71,7 @@ function MobileSideBarItem({children, to, ...props}:
   </Link>
 }
 
-function MobileSideBar({show} : {show: boolean}) {
+function MobileSideBar() {
   return <div className="lg:hidden">
     <ul className="my-5 pb-5 flex flex-col space-y-1 border-b-2">
       <MobileSideBarItem to="/calculator">
@@ -90,16 +90,20 @@ function MobileSideBar({show} : {show: boolean}) {
   </div>
 }
 
+function SideBarHeader() {
+  return <Link to="/" className="flex items-center ">
+    <img className="h-7 w-7 mr-3" src="https://picsum.photos/30" alt="베스킨라빈스 아이콘" loading="lazy"/>
+    <h1 className="self-center text-xl font-semibold whitespace-nowrap transition hover:font-extrabold text-gray-800 dark:text-primary-50">써리원 시뮬레이터</h1>
+  </Link>
+}
+
 export default function SideBar() {
   const [mobileShow, setMobileShow] = useState(false);
   return <nav className="h-full w-full">
-    <div className="bg-secondary-100 dark:bg-gray-800 rounded border-b-2 lg:border-0 border-b-200  h-full">
+    <div className="bg-secondary-100 dark:bg-gray-800 rounded border-b-2 lg:border-0 border-b-200 h-full">
       <div className="overflow-y-auto py-6 mb-4 px-3 flex justify-between">
-        <Link to="/" className="flex items-center ">
-          <img className="h-7 w-7 mr-3" src="https://picsum.photos/30" alt="베스킨라빈스 아이콘" loading="lazy"/>
-          <h1 className="self-center text-xl font-semibold whitespace-nowrap transition hover:font-extrabold text-gray-800 dark:text-primary-50">써리원 시뮬레이터</h1>
-        </Link>
-        <button type="button" className="accordion-button lg:hidden" onClick={() => setMobileShow((mobileShow) => !mobileShow)}>
+        <SideBarHeader />
+        <button type="button" className="accordion-button lg:hidden" onClick={() => setMobileShow((mobileShow) => !mobileShow)} aria-label="toggle-navigation">
           <svg className="w-6 h-6" role="button">
             <MenuIcon/>
           </svg>
@@ -110,6 +114,6 @@ export default function SideBar() {
         <DarkToggle />
       </div>
     </div>
-    {mobileShow? <MobileSideBar show={mobileShow}/> : null}
+    {mobileShow? <MobileSideBar /> : null}
   </nav>
 }

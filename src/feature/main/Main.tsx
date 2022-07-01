@@ -1,18 +1,23 @@
+import { Spinner } from "component/Spinner";
+import React, { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
-import CalculatorMain from "../calculator/CalculatorMain";
-import HistoryMain from "../history/HistoryMain";
-import SinglePlayMain from "../singlePlay/SinglePlayMain";
 import Footer from "./Footer";
 import Landing from "./Landing";
 import SideBar from "./SideBar";
 
+const CalculatorMain = React.lazy(() => import("../calculator/CalculatorMain"));
+const SinglePlayMain = React.lazy(() => import("../singlePlay/SinglePlayMain"));
+const HistoryMain = React.lazy(() => import("../history/HistoryMain"));
+
 export function MainRouter() {
-  return <Routes>
-    <Route path="/" element={<Landing/>} />
-    <Route path="/calculator" element={<CalculatorMain/>} />
-    <Route path="/single-play" element={<SinglePlayMain/>} />
-    <Route path="/history" element={<HistoryMain/>} />
-  </Routes>
+  return <Suspense fallback={<Spinner/>}>
+    <Routes>
+      <Route path="/" element={<Landing/>} />
+      <Route path="/calculator" element={<CalculatorMain/>} />
+      <Route path="/single-play" element={<SinglePlayMain/>} />
+      <Route path="/history" element={<HistoryMain/>} />
+    </Routes>
+  </Suspense>
 }
 
 export default function Main() {
