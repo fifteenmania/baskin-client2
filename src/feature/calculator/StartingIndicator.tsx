@@ -17,7 +17,8 @@ export default function StartingIndicator({loseProbAtZero} : {loseProbAtZero: nu
   }
   return <div className='pr-4 pl-4 pt-4'>
     <h2 className='text-2xl'>순서별 승률 분석</h2>
-    {`${bestStarting + 1}번째로 하는 게 제일 유리합니다. ${worstStarting + 1}번째로 하는 게 제일 불리합니다.`}
+    <p>시작 순서에 따른 승률입니다.</p>
+    <p>{`${bestStarting + 1}번째로 하는 게 제일 유리합니다. ${worstStarting + 1}번째로 하는 게 제일 불리합니다.`}</p>
     <Bar data={data} />
   </div>
 }

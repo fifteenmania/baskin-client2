@@ -1,9 +1,9 @@
 import { GithubIcon } from "asset/assets"
 import { GmailIcon } from "asset/assets"
 
-function FooterIcon({href, svg} : {href: string, svg: React.ReactNode}) {
+function FooterIcon({href, svg, ...props} : {href: string, svg: React.ReactNode}) {
   return <a className='mr-9 text-gray-800 dark:text-gray-50' href={href}>
-    <svg className='w-5 h-5 dark:fill-white'>
+    <svg className='w-5 h-5 dark:fill-white' role="img" {...props}>
       {svg}
     </svg>
   </a>
