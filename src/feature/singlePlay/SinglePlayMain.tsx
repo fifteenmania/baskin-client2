@@ -20,6 +20,5 @@ export default function SinglePlayMain() {
       <button onClick={() => setGameStart(true)}>게임 시작</button>
       {gameStart? <GameBoard /> : null}
     </div>
-    <AvatarSetting />
   </section>
 }

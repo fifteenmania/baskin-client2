@@ -2,6 +2,6 @@
 
 export default function GameBoard() {
   return <div>
-    게임판
+    구현 중인 기능입니다.
   </div>
 }
