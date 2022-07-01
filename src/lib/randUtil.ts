@@ -33,9 +33,9 @@ export function getRandomIntVec(length: number, min: number, max: number): numbe
 /**
  * 
  * @param vec 추출 대상이 되는 벡터입니다.
- * @returns 대상 벡터에서 임의 추출된 하나의 수입니다.
+ * @returns 대상 벡터에서 임의 추출된 하나의 요소입니다.
  */
-export function randomSampleOne(vec: number[]): number {
+export function randomSampleOne<T>(vec: T[]): T {
     const pickedIdx = getRandomInt(0, vec.length);
     return vec[pickedIdx];
 }

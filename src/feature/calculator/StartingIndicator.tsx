@@ -1,6 +1,14 @@
 import { vecFindMaxIdx, vecFindMinIdx } from "lib/linarg"
 import { Bar } from "react-chartjs-2"
 
+const options = {
+  plugins: {
+    legend: {
+      display: false
+    }
+  }
+}
+
 export default function StartingIndicator({loseProbAtZero} : {loseProbAtZero: number[]}) {
   const bestStarting = vecFindMinIdx(loseProbAtZero)
   const worstStarting = vecFindMaxIdx(loseProbAtZero)
@@ -18,6 +26,6 @@ export default function StartingIndicator({loseProbAtZero} : {loseProbAtZero: nu
   return <div>
     <h2 className='text-2xl'>순서별 승률 분석</h2>
     <p>{`${bestStarting + 1}번째로 하는 게 제일 유리합니다. ${worstStarting + 1}번째로 하는 게 제일 불리합니다.`}</p>
-    <Bar data={data} />
+    <Bar data={data} options={options}/>
   </div>
 }

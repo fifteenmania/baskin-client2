@@ -29,7 +29,7 @@ export default function CalculatorMain() {
     </Description>
     <InputPanel gameSetting={gameSettingInput} dispatch={settingDispatch}/>
     <div className='flex flex-row flex-wrap'>
-      <article className='max-w-2xl w-full px-4 mb-6 flex-shrink flex-grow'>
+      <article className='max-w-2xl w-full px-4 mb-8 flex-shrink flex-grow'>
         <NumberIndicator loseProbMat={loseProbMat} darkMode={dark}/>
       </article>
       <article className='max-w-2xl w-full px-4 flex-shrink flex-grow'>

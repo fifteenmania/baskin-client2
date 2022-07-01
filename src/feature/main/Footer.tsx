@@ -18,7 +18,7 @@ export default function Footer() {
       </div>
     </div>
     <div className="text-gray-700 dark:text-gray-100 text-center p-4 w-full">
-      &copy; 2022 Copyright: <a className="text-gray-800 dark:text-gray-300" href="/">fifteenmania</a>
+      &copy; 2022 Copyright: <a className="text-gray-800 dark:text-gray-300" href="https://github.com/fifteenmania">fifteenmania</a>
     </div>
   </footer>
 }

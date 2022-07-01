@@ -5,6 +5,7 @@ import { useState } from "react";
 import GameBoard from "./GameBoard";
 import useGameSetting from "hooks/useGameSetting";
 import Description from "component/Description";
+import AvatarSetting from "./AvatarSetting";
 
 export default function SinglePlayMain() {
   const [gameSetting, settingDispatch] = useGameSetting()
@@ -19,5 +20,6 @@ export default function SinglePlayMain() {
       <button onClick={() => setGameStart(true)}>게임 시작</button>
       {gameStart? <GameBoard /> : null}
     </div>
+    <AvatarSetting />
   </section>
 }
