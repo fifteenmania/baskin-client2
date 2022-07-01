@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import GameSetting from "../typedef/GameSetting";
+import { GameSettingInput } from "../typedef/GameSetting";
 
 export enum GameSettingActionsKind {
   SET_NUM_PLAYER = 'SET_NUM_PLAYER',
@@ -15,47 +15,73 @@ export interface GameSettingAction {
 
 export type GameSettingDispatch = React.Dispatch<GameSettingAction>
 
-function gameSettingReducer(state: GameSetting, action: GameSettingAction): GameSetting {
-  const parsed = Number.parseInt(action.payload)
-  if (Number.isNaN(parsed) || parsed < 0) {
-    return state
+export function GameSettingInputToGameSetting(gameSettingInput: GameSettingInput) {
+  return {
+    numPlayer: Number.parseInt(gameSettingInput.numPlayer)?? 0,
+    maxCall: Number.parseInt(gameSettingInput.maxCall)?? 0,
+    numEnd: Number.parseInt(gameSettingInput.numEnd)?? 0,
+    myOrder: Number.parseInt(gameSettingInput.myOrder) - 1?? 0
   }
+}
+
+function gameSettingReducer(state: GameSettingInput, action: GameSettingAction): GameSettingInput {
+  const parsed = Number.parseInt(action.payload) ?? 0
   switch (action.type) {
     case (GameSettingActionsKind.SET_MAX_CALL):
+      if (parsed > 1000) {
+        return state;
+      }
+      const numEnd = Number.parseInt(state.numEnd);
+      if (!Number.isNaN(numEnd) && parsed > numEnd) {
+        return {
+          ...state,
+          maxCall: numEnd.toString()
+        };
+      }
       return {
         ...state,
-        maxCall: parsed
+        maxCall: action.payload
       }
     case(GameSettingActionsKind.SET_MY_ORDER):
-      if (parsed > state.numPlayer || parsed === 0) {
-        return state
+      const numPlayer = Number.parseInt(state.numPlayer);
+      if (!Number.isNaN(numPlayer) && parsed > numPlayer) {
+        return {
+          ...state,
+          myOrder: (numPlayer).toString()
+        }
       }
       return {
         ...state,
-        myOrder: parsed-1
+        myOrder: action.payload
       }
     case(GameSettingActionsKind.SET_NUM_END):
+      if (parsed > 1000) {
+        return state;
+      }
       return {
         ...state,
-        numEnd: parsed
+        numEnd: action.payload
       }
     case(GameSettingActionsKind.SET_NUM_PLAYER):
+      if (parsed > 500) {
+        return state;
+      }
       return {
         ...state,
-        numPlayer: parsed
+        numPlayer: action.payload
       }
     default:
       return state;
   }
 }
 
-const initialSetting: GameSetting = {
-  numEnd: 31,
-  numPlayer: 3,
-  maxCall: 3,
-  myOrder: 0
+const initialSetting: GameSettingInput = {
+  numEnd: "31",
+  numPlayer: "3",
+  maxCall: "3",
+  myOrder: "0"
 }
 
-export default function useGameSetting(): [GameSetting, GameSettingDispatch] {
+export default function useGameSetting(): [GameSettingInput, GameSettingDispatch] {
   return useReducer(gameSettingReducer, initialSetting);
 }
