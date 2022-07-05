@@ -1,7 +1,24 @@
+import Avatar from "avataaars";
+import useRandomAvatar from "hooks/useRandomAvatar";
+import GameSetting from "typedef/GameSetting";
 
+export function RandomAvatar() {
+  const [avatarSetting] = useRandomAvatar();
+  return <div className="w-fit h-fit mx-2">
+    <Avatar
+      {...avatarSetting}
+    />
+  </div>
+}
 
-export default function GameBoard() {
-  return <div>
-    구현 중인 기능입니다.
+export function ComputerAvatars({gameSetting}: {gameSetting: GameSetting}) {
+  return <div className="flex flex-row flex-wrap mt-4">
+    {Array.from({length: gameSetting.numPlayer}).map((value, i) => <RandomAvatar key={i}/>)}
+  </div>
+}
+
+export default function GameBoard({gameSetting}: {gameSetting: GameSetting}) {
+  return <div className="mt-4">
+    <ComputerAvatars gameSetting={gameSetting}/>
   </div>
 }

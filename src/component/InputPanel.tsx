@@ -2,7 +2,7 @@ import React from "react"
 import { GameSettingActionsKind, GameSettingDispatch } from "../hooks/useGameSetting";
 import { GameSettingInput } from "../typedef/GameSetting";
 
-function InputFieldNumber({onChange, name, value, ...props}: {onChange: React.ChangeEventHandler<HTMLInputElement>, name: string, value: string}) {
+export function InputFieldNumber({onChange, name, value, ...props}: {onChange: React.ChangeEventHandler<HTMLInputElement>, name: string, value: string}) {
   return <input className="border 
     dark:bg-gray-800
     border-gray-300 
@@ -17,13 +17,13 @@ function InputFieldNumber({onChange, name, value, ...props}: {onChange: React.Ch
     p-2" type="number" onChange={onChange} value={value} name={name} {...props} />
 }
 
-function InputFieldLabel({htmlFor, children}: {htmlFor: string, children?: React.ReactNode}) {
+export function InputFieldLabel({htmlFor, children}: {htmlFor: string, children?: React.ReactNode}) {
   return <label htmlFor={htmlFor} className=" text-base font-medium block text-gray-800 dark:text-gray-100">
     {children}
   </label>
 }
 
-function InputFieldContainer({children}: {children?: React.ReactNode}) {
+export function InputFieldContainer({children}: {children?: React.ReactNode}) {
   return <div className="mb-4 max-w-sm">
     {children}
   </div>

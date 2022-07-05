@@ -15,7 +15,7 @@ export interface GameSettingAction {
 
 export type GameSettingDispatch = React.Dispatch<GameSettingAction>
 
-export function GameSettingInputToGameSetting(gameSettingInput: GameSettingInput) {
+export function gameSettingInputToGameSetting(gameSettingInput: GameSettingInput) {
   return {
     numPlayer: Number.parseInt(gameSettingInput.numPlayer)?? 0,
     maxCall: Number.parseInt(gameSettingInput.maxCall)?? 0,

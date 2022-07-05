@@ -2,14 +2,14 @@ import InputPanel from 'component/InputPanel';
 import { getFullLoseProbMat } from 'lib/strategy';
 import Header from 'component/Header'
 import { GraphIcon } from 'asset/assets';
-import useGameSetting, { GameSettingInputToGameSetting } from 'hooks/useGameSetting';
+import useGameSetting, { gameSettingInputToGameSetting } from 'hooks/useGameSetting';
 import useDarkMode from 'hooks/useDarkMode';
 import Description from 'component/Description';
 import ChartsContainer from './ChartsContainer';
 
 export default function CalculatorMain() {
   const [gameSettingInput, settingDispatch] = useGameSetting();
-  const gameSetting = GameSettingInputToGameSetting(gameSettingInput);
+  const gameSetting = gameSettingInputToGameSetting(gameSettingInput);
   const loseProbMat = getFullLoseProbMat(gameSetting.numPlayer, gameSetting.maxCall, gameSetting.numEnd);
   const [dark, ] = useDarkMode();
   return <section>

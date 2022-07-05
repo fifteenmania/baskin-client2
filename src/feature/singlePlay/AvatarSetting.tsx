@@ -1,20 +1,13 @@
 import Avatar, {AvatarStyle} from "avataaars";
+import useRandomAvatar from "hooks/useRandomAvatar";
+import { randomSampleOne } from "lib/randUtil";
+import { TopType } from "typedef/AvatarType";
 
 export default function AvatarSetting() {
+  const [avatarSetting] = useRandomAvatar();
   return <div>
     <Avatar
-      style={{width: '100px', height: '100px'}}
-      avatarStyle={AvatarStyle.Circle}
-      topType='LongHairMiaWallace'
-      accessoriesType='Prescription02'
-      hairColor='BrownDark'
-      facialHairType='Blank'
-      clotheType='Hoodie'
-      clotheColor='PastelBlue'
-      eyeType='Happy'
-      eyebrowType='Default'
-      mouthType='Smile'
-      skinColor='Light'
+      {...avatarSetting}
     />
   </div>
 }
