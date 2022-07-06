@@ -1,4 +1,3 @@
-import { AvatarStyle } from "avataaars"
 import { randomSampleOne } from "lib/randUtil"
 import { useState } from "react"
 import { TopType, AccessoriesType, HairColor, FacialHairColor, ClotheType, EyebrowType, ClotheColor, SkinColor, NeutralMouthType, NeutralEyeType } from "typedef/AvatarType"
@@ -6,7 +5,7 @@ import { TopType, AccessoriesType, HairColor, FacialHairColor, ClotheType, Eyebr
 function getRandomSetting() {
   return {
     style: {width: '8rem', height: '8rem'},
-    avatarStyle: AvatarStyle.Circle,
+    avatarStyle: "circle",
     topType: randomSampleOne([...TopType]),
     accessoriesType: randomSampleOne([...AccessoriesType]),
     hairColor: randomSampleOne([...HairColor]),

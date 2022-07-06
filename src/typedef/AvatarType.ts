@@ -1,14 +1,14 @@
 export interface AvatarSetting {
-  topType: typeof TopType[keyof typeof TopType];
-  accessoriesType: typeof AccessoriesType[keyof typeof AccessoriesType];
-  hairColor: typeof HairColor[keyof typeof HairColor];
-  facialHairType: typeof FacialHairColor[keyof typeof FacialHairColor];
-  clotheType: typeof ClotheType[keyof typeof ClotheType];
-  clotheColor: typeof ClotheColor[keyof typeof ClotheColor];
-  eyeType: typeof EyeType[keyof typeof EyeType];
-  eyebrowType: typeof EyebrowType[keyof typeof EyebrowType];
-  mouthType: typeof MouthType[keyof typeof MouthType];
-  skinColor: typeof SkinColor[keyof typeof SkinColor];
+  topType: typeof TopType[number];
+  accessoriesType: typeof AccessoriesType[number];
+  hairColor: typeof HairColor[number];
+  facialHairType: typeof FacialHairColor[number];
+  clotheType: typeof ClotheType[number];
+  clotheColor: typeof ClotheColor[number];
+  eyeType: typeof EyeType[number];
+  eyebrowType: typeof EyebrowType[number];
+  mouthType: typeof MouthType[number];
+  skinColor: typeof SkinColor[number];
 }
 
 export const TopType = [

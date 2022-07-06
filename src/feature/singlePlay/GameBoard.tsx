@@ -1,13 +1,11 @@
-import Avatar from "avataaars";
 import useRandomAvatar from "hooks/useRandomAvatar";
 import GameSetting from "typedef/GameSetting";
+import Avatar from "avataars"
 
 export function RandomAvatar() {
   const [avatarSetting] = useRandomAvatar();
   return <div className="w-fit h-fit mx-2">
-    <Avatar
-      {...avatarSetting}
-    />
+    <Avatar avatarStyle="circle"/>
   </div>
 }
 

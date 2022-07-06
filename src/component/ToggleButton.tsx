@@ -23,9 +23,9 @@ export function ToggleButtonBack({id, value, onClick, children} : {id: string, v
   </label>
 }
 
-export default function ToggleButton({id, value, onClick, children} : {id: string, value: boolean, onClick: React.MouseEventHandler<HTMLInputElement>, children?: React.ReactNode}) {
+export default function ToggleButton({id, value, onChange, children} : {id: string, value: boolean, onChange: React.ChangeEventHandler<HTMLInputElement>, children?: React.ReactNode}) {
   return <label htmlFor={id} className="inline-flex relative items-center cursor-pointer select-none">
-      <input type="checkbox" checked={value} id={id} className="sr-only peer" onClick={onClick}/>
+      <input type="checkbox" checked={value} id={id} className="sr-only peer" onChange={onChange}/>
       <div className="w-11 h-6 
         bg-gray-600
         dark:bg-gray-700
