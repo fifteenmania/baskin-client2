@@ -1,6 +1,6 @@
 import useRandomAvatar from "hooks/useRandomAvatar";
 import GameSetting from "typedef/GameSetting";
-import Avatar from "avataars"
+import Avatar from "avataaars2"
 
 export function RandomAvatar() {
   const [avatarSetting] = useRandomAvatar();
