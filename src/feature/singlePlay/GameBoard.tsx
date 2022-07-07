@@ -1,15 +1,13 @@
 import useRandomAvatar from "hooks/useRandomAvatar";
 import GameSetting from "typedef/GameSetting";
-import Avatar from "avataaars2"
+import Avatar, { topList } from "avataaars2"
+import { randomSampleOne } from "lib/randUtil";
 
 export function RandomAvatar() {
   const [avatarSetting] = useRandomAvatar();
   return <div className="w-fit h-fit mx-2">
-    <Avatar 
-      avatarStyle="circle" 
-      clothType="GraphicShirt" 
-      clothColor="Black" 
-      graphicType="Pizza"
+    <Avatar
+      {...avatarSetting}
     />
   </div>
 }

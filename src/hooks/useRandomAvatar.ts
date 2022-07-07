@@ -1,21 +1,20 @@
+import { accessoriesList, AvatarStyleType, clothList, colorStringList, eyebrowList, eyeList, facialHairList, hairColorStringList, mouthList, skinColorStringList, topList } from "avataaars2";
 import { randomSampleOne } from "lib/randUtil"
 import { useState } from "react"
-import { TopType, AccessoriesType, HairColor, FacialHairColor, ClotheType, EyebrowType, ClotheColor, SkinColor, NeutralMouthType, NeutralEyeType } from "typedef/AvatarType"
 
 function getRandomSetting() {
   return {
-    style: {width: '8rem', height: '8rem'},
-    avatarStyle: "circle",
-    topType: randomSampleOne([...TopType]),
-    accessoriesType: randomSampleOne([...AccessoriesType]),
-    hairColor: randomSampleOne([...HairColor]),
-    facialHairType: randomSampleOne([...FacialHairColor]),
-    clotheType: randomSampleOne([...ClotheType]),
-    clotheColor: randomSampleOne([...ClotheColor]),
-    eyeType: randomSampleOne([...NeutralEyeType]),
-    eyebrowType: randomSampleOne([...EyebrowType]),
-    mouthType: randomSampleOne([...NeutralMouthType]),
-    skinColor: randomSampleOne([...SkinColor])
+    avatarStyle: "Circle" as AvatarStyleType,
+    topType: randomSampleOne(topList),
+    accessoriesType: randomSampleOne(accessoriesList),
+    hairColor: randomSampleOne(hairColorStringList),
+    facialHairType: randomSampleOne(facialHairList),
+    clothType: randomSampleOne(clothList),
+    clothColor: randomSampleOne(colorStringList),
+    eyeType: randomSampleOne(eyeList),
+    eyebrowType: randomSampleOne(eyebrowList),
+    mouthType: randomSampleOne(mouthList),
+    skinColor: randomSampleOne(skinColorStringList)
   }
 }
 
