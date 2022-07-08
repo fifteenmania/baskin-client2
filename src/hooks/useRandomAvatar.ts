@@ -1,12 +1,15 @@
-import { accessoriesList, AvatarStyleType, clothList, colorStringList, eyebrowList, eyeList, facialHairList, hairColorStringList, mouthList, skinColorStringList, topList } from "avataaars2";
+import { accessoriesList, AvatarStyleType, clothList, colorStringList, eyebrowList, eyeList, facialHairList, graphicList, hairColorStringList, mouthList, skinColorStringList, topList } from "avataaars2";
+import { AvatarProps } from "avataaars2/dist/avatar";
 import { randomSampleOne } from "lib/randUtil"
-import { useState } from "react"
+import { useId, useState } from "react"
 
-function getRandomSetting() {
-  return {
-    avatarStyle: "Circle" as AvatarStyleType,
+function getRandomSetting(): AvatarProps {
+  const setting: AvatarProps = {
+    avatarStyle: "Circle",
+    backgroundColor: "Black",
     topType: randomSampleOne(topList),
     accessoriesType: randomSampleOne(accessoriesList),
+    graphicType: randomSampleOne(graphicList),
     hairColor: randomSampleOne(hairColorStringList),
     facialHairType: randomSampleOne(facialHairList),
     clothType: randomSampleOne(clothList),
@@ -16,9 +19,12 @@ function getRandomSetting() {
     mouthType: randomSampleOne(mouthList),
     skinColor: randomSampleOne(skinColorStringList)
   }
+  console.log(setting)
+  return setting;
 }
 
 export default function useRandomAvatar() {
-  const [setting, ] = useState(getRandomSetting)
-  return [setting];
+  const key = useId()
+  const [setting, ] = useState(getRandomSetting())
+  return [key, setting] as const;
 }

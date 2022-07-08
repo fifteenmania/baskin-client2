@@ -8,7 +8,7 @@ module.exports = {
     backgroundColor: {
       primary: colors.blue,
       secondary: colors.slate,
-      gray: colors.gray
+      ...colors
     },
     textColor: {
       primary: colors.slate,
