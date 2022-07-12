@@ -5,7 +5,6 @@ import { useState } from "react";
 import GameBoard from "./GameBoard";
 import useGameSetting from "hooks/useGameSetting";
 import Description from "component/Description";
-import AvatarSetting from "./AvatarSetting";
 
 export default function SinglePlayMain() {
   const [gameSetting, settingDispatch] = useGameSetting()
