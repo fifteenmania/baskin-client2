@@ -6,12 +6,12 @@ import useGameSetting, { GameSettingInputToGameSetting } from 'hooks/useGameSett
 import useDarkMode from 'hooks/useDarkMode';
 import Description from 'component/Description';
 import ChartsContainer from './ChartsContainer';
-import { useDeferredValue } from 'react';
+import { useDeferredValue, useMemo } from 'react';
 
 export default function CalculatorMain() {
   const [gameSettingInput, settingDispatch] = useGameSetting();
-  const gameSetting = GameSettingInputToGameSetting(gameSettingInput);
-  const loseProbMat = useDeferredValue(getFullLoseProbMat(gameSetting.numPlayer, gameSetting.maxCall, gameSetting.numEnd));
+  const gameSetting = useDeferredValue(GameSettingInputToGameSetting(gameSettingInput));
+  const loseProbMat = useMemo(() => getFullLoseProbMat(gameSetting.numPlayer, gameSetting.maxCall, gameSetting.numEnd), [gameSetting]);
   const [dark, ] = useDarkMode();
   return <section>
     <Header svg={<GraphIcon/>} text="승률 계산기" to="/calculator"/>
