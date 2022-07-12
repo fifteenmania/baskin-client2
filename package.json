@@ -25,7 +25,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "deploy": "npx push-dir --dir=build --branch=gh-pages --cleanup",
+    "deploy": "push-dir --dir=build --branch=gh-pages --cleanup",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
