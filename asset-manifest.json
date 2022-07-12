@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/baskin-client2/static/css/main.0aa359e5.css",
+    "main.js": "/baskin-client2/static/js/main.ed01c548.js",
+    "static/js/900.7626284f.chunk.js": "/baskin-client2/static/js/900.7626284f.chunk.js",
+    "static/js/103.b91a1de5.chunk.js": "/baskin-client2/static/js/103.b91a1de5.chunk.js",
+    "static/js/171.3d0260b0.chunk.js": "/baskin-client2/static/js/171.3d0260b0.chunk.js",
+    "static/js/893.88b1fa8b.chunk.js": "/baskin-client2/static/js/893.88b1fa8b.chunk.js",
+    "static/media/clock-history.svg": "/baskin-client2/static/media/clock-history.b86e091473f8b3f004289b66c5dd512a.svg",
+    "index.html": "/baskin-client2/index.html",
+    "static/media/github.svg": "/baskin-client2/static/media/github.3b21c250a99986431958daaa9246a45a.svg",
+    "static/media/graph-up.svg": "/baskin-client2/static/media/graph-up.ad2830c297d04b7e460d297ba75f69be.svg",
+    "static/media/gmail.svg": "/baskin-client2/static/media/gmail.f12319849e28413aaa94f1c11fd35eef.svg",
+    "static/media/play-circle.svg": "/baskin-client2/static/media/play-circle.ca10ef077270dfe655cc82c4dc67501b.svg",
+    "static/media/list.svg": "/baskin-client2/static/media/list.d816dbe5fe8a25bbf2b38f8b09442139.svg",
+    "main.0aa359e5.css.map": "/baskin-client2/static/css/main.0aa359e5.css.map",
+    "main.ed01c548.js.map": "/baskin-client2/static/js/main.ed01c548.js.map",
+    "900.7626284f.chunk.js.map": "/baskin-client2/static/js/900.7626284f.chunk.js.map",
+    "103.b91a1de5.chunk.js.map": "/baskin-client2/static/js/103.b91a1de5.chunk.js.map",
+    "171.3d0260b0.chunk.js.map": "/baskin-client2/static/js/171.3d0260b0.chunk.js.map",
+    "893.88b1fa8b.chunk.js.map": "/baskin-client2/static/js/893.88b1fa8b.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0aa359e5.css",
+    "static/js/main.ed01c548.js"
+  ]
+}

@@ -1,0 +1,4 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Sitemap: https://fifteenmania.github.io/baskin-client2/sitemap.xml
+Disallow:
