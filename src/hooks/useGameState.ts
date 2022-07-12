@@ -6,29 +6,33 @@ import SinglePlayAction from "typedef/SinglePlayAction";
 
 export type GameStateDispatch = React.Dispatch<SinglePlayAction>
 
-function getNextPlayer(currentPlayer: number, numPlayer: number) {
+export function getNextPlayer(currentPlayer: number, numPlayer: number) {
   return (currentPlayer + 1) % numPlayer
 }
 
+export function getPrevPlayer(currentPlayer: number, numPlayer: number) {
+  return (currentPlayer - 1 + numPlayer) % numPlayer
+}
+
 function gameStateReducer(state: SinglePlayGameState, action: SinglePlayAction): SinglePlayGameState {
+  if (state.isEnd) {
+    return state;
+  }
   switch (action.type) {
     case "call": {
-      const newQueue = state.taskQueue.copy()
-      Array({length: action.payload - state.currentNumber - 1}).forEach((_, i) => {
-        const action: SinglePlayAction = {type: "countUp", payload: state.currentNumber + i + 1}
-        newQueue.push(action)
-      })
-      newQueue.push({type: "turnEnd", payload: action.payload})
-      return {
-        ...state,
-        taskQueue: newQueue
+      const nextPlayer = getNextPlayer(state.activePlayer, state.gameSetting.numPlayer)
+      if (action.payload >= state.gameSetting.numEnd) {
+        return {
+          ...state,
+          activePlayer: nextPlayer,
+          currentNumber: action.payload,
+          isEnd: true,
+        }
       }
-    }
-    case "countUp": {
-      const newQueue = state.taskQueue.copy()
       return {
         ...state,
-        taskQueue: newQueue,
+        activePlayer: nextPlayer,
+        currentNumber: action.payload,
       }
     }
     default:
@@ -41,10 +45,8 @@ function getInitialGameState(gameSetting: GameSetting, gameId: string): SinglePl
     gameSetting: gameSetting,
     activePlayer: 0,
     currentNumber: 0,
-    taskQueue: new Queue(gameSetting.numPlayer * gameSetting.maxCall),
     inputEnabled: false,
     isEnd: false,
-    isIdle: true,
     gameLog: {
       gameId: gameId,
       gameSetting: gameSetting,
@@ -56,11 +58,6 @@ function getInitialGameState(gameSetting: GameSetting, gameId: string): SinglePl
 export function useGameState(gameSetting: GameSetting) {
   const gameId = useId();
   const [state, dispatch] = useReducer(gameStateReducer, getInitialGameState(gameSetting, gameId));
-  useEffect(() => {
-    if (!state.isIdle) {
-      return;
-    }
 
-  }, [state])
   return [state, dispatch] as const
 }

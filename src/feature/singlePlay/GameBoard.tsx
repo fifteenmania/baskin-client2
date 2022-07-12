@@ -1,9 +1,10 @@
 import GameSetting from "typedef/GameSetting";
 import Avatar, { ColorString } from "avataaars2"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useDarkMode from "hooks/useDarkMode";
 import { SinglePlayGameState } from "typedef/GameState";
-import { GameStateDispatch, useGameState } from "hooks/useGameState";
+import { GameStateDispatch, useGameState, getPrevPlayer } from "hooks/useGameState";
+import useDisplayNumber, { useDisplayNumbers } from "hooks/useDisplayNumber";
 
 function getBackgroundColor(dark:boolean, onTurn: boolean, onEnd: boolean): ColorString {
   if (onTurn && onEnd) {
@@ -16,8 +17,8 @@ function getBackgroundColor(dark:boolean, onTurn: boolean, onEnd: boolean): Colo
 }
 
 export function PlayerAvatar({bgColor, displayNumber, onAnimationEnd} : {bgColor: ColorString, displayNumber: number|null, onAnimationEnd: () => void}) {
-  return <div className="relative">
-    <div className="w-12 h-12
+  return <div className="relative content-auto">
+    <div className="w-12
       absolute
       top-0 left-2
     bg-gray-700
@@ -28,6 +29,7 @@ export function PlayerAvatar({bgColor, displayNumber, onAnimationEnd} : {bgColor
       align-bottom
       animate-fadeout
       "
+      key={displayNumber}
       onAnimationEnd={onAnimationEnd}
       >{displayNumber}</div>
     <Avatar
@@ -38,14 +40,25 @@ export function PlayerAvatar({bgColor, displayNumber, onAnimationEnd} : {bgColor
   </div>
 }
 
-function AvatarContainer({gameState} : {gameState: SinglePlayGameState}) {
+function AvatarContainer({gameState, dispatch} : {gameState: SinglePlayGameState, dispatch: GameStateDispatch}) {
   const [dark] = useDarkMode()
-
+  const [count, activated, setDisplayNumbers, countUp, activate, deactivate] = useDisplayNumbers(gameState.gameSetting.numPlayer);
+  const displayNumbers = count.map((num, i) => activated[i] ? num : null);
+  useEffect(() => {
+    const prevPlayer = getPrevPlayer(gameState.activePlayer, gameState.gameSetting.numPlayer);
+    setDisplayNumbers(prevPlayer, count[prevPlayer], gameState.currentNumber, () => console.log("end"));
+  }, [gameState.currentNumber])
+  useEffect(() => {
+    activate(gameState.activePlayer);
+    const prevPlayer = getPrevPlayer(gameState.activePlayer, gameState.gameSetting.numPlayer);
+    console.log("deactivate", prevPlayer);
+    deactivate(prevPlayer);
+  }, [gameState.activePlayer])
   return <div className="flex flex-row flex-wrap mt-6">
     {Array.from({length: gameState.gameSetting.numPlayer}).map((_, i) => <PlayerAvatar key={i} 
-        displayNumber={gameState.currentNumber} 
+        displayNumber={displayNumbers[i]}
         bgColor={getBackgroundColor(dark, i===gameState.activePlayer, gameState.isEnd)}
-        onAnimationEnd={() => {}}
+        onAnimationEnd={() => countUp(i)}
         />)}
   </div>
 }
@@ -91,6 +104,6 @@ export default function GameBoard({gameSetting}: {gameSetting: GameSetting}) {
   const [gameState, dispatch] = useGameState(gameSetting);
   return <div className="mt-6">
     <InputContainer gameState={gameState} dispatch={dispatch}/>
-    <AvatarContainer gameState={gameState}/>
+    <AvatarContainer gameState={gameState} dispatch={dispatch}/>
   </div>
 }

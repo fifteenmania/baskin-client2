@@ -22,6 +22,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "build:css" : "NODE_ENV=production tailwindcss -o src/tailwind.css -m",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "deploy": "push-dir --dir=build --branch=gh-pages --cleanup",

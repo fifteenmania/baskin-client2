@@ -10,7 +10,7 @@ function FooterIcon({href, svg, ...props} : {href: string, svg: React.ReactNode}
 }
 
 export default function Footer() {
-  return <footer className="bg-gray-100 dark:bg-gray-900 text-center w-full mt-10 divide-y divide-gray-300 dark:divide-gray-700">
+  return <footer className="bg-gray-100 dark:bg-gray-900 text-center w-full mt-10 divide-y divide-gray-300 dark:divide-gray-700 content-auto">
     <div className="w-full pt-9">
       <div className="flex justify-center mb-9 w-full">
         <FooterIcon svg={<GithubIcon/>} href="https://github.com/fifteenmania/baskin-client2"/>

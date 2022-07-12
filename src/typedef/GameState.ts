@@ -9,8 +9,6 @@ export default interface GameState<T> {
   currentNumber: number
   isEnd: boolean
   inputEnabled: boolean,
-  isIdle: boolean,
-  taskQueue: Queue<T>
   gameLog: GameLog
 }
 

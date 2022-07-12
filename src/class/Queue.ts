@@ -49,4 +49,8 @@ export default class Queue<T> {
   public getCurrentSize(): number {
     return this.currentSize;
   }
+
+  public isEmpty(): boolean {
+    return this.currentSize === 0;
+  }
 }
