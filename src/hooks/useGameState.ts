@@ -58,6 +58,11 @@ function getInitialGameState(gameSetting: GameSetting, gameId: string): SinglePl
 export function useGameState(gameSetting: GameSetting) {
   const gameId = useId();
   const [state, dispatch] = useReducer(gameStateReducer, getInitialGameState(gameSetting, gameId));
-
+  useEffect(() => {
+    if (state.activePlayer === gameSetting.myOrder) {
+      return
+    }
+    
+  }, [state])
   return [state, dispatch] as const
 }

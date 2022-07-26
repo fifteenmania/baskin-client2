@@ -16,9 +16,7 @@ function getBackgroundColor(dark:boolean, onTurn: boolean, onEnd: boolean): Colo
 }
 
 export function PlayerAvatar({bgColor} : {bgColor: ColorString}) {
-  
   return <div className="relative content-auto">
-
     <Avatar
       className="w-40 h-40 transition-all duration-500"
       backgroundColor={bgColor}
@@ -29,9 +27,8 @@ export function PlayerAvatar({bgColor} : {bgColor: ColorString}) {
 
 function AvatarContainer({gameState, dispatch} : {gameState: SinglePlayGameState, dispatch: GameStateDispatch}) {
   const [dark, ] = useDarkMode()
-  const bgColor = getBackgroundColor(dark, true, false)
   return <div className="flex flex-row flex-wrap mt-6">
-    <PlayerAvatar bgColor={bgColor}/>
+    {Array.from({length: gameState.gameSetting.numPlayer}).map((_, i) => <PlayerAvatar key={i} bgColor={getBackgroundColor(dark, gameState.activePlayer === i, gameState.isEnd)}/>)}
   </div>
 }
 
@@ -52,17 +49,16 @@ function InputContainer({gameState, dispatch} : {gameState: SinglePlayGameState,
         text-xl
         rounded-lg
         border
-        border-gray-300
-        bg-white
-        dark:bg-gray-800
+      border-gray-300
+      bg-white
+      dark:bg-gray-800
       dark:text-gray-100
         mr-4
       "
       value={call}
       onChange={(e) => setCall(parseInt(e.target.value))}
     >
-      {availableCall.map((call, i) => <option 
-        key={i} value={call}>{call}</option>)}
+      {availableCall.map((call, i) => <option key={i} value={call}>{call}</option>)}
     </select>
     <button onClick={() => {
       dispatch({type: "call", payload: call})
