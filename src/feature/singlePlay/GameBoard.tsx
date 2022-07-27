@@ -65,6 +65,7 @@ function InputContainer({gameState, dispatch} : {gameState: SinglePlayGameState,
       setCall(call+1)
     }}
     >까지 말하기</button>
+    {gameState.currentNumber}
   </div>
 }
 

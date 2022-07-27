@@ -1,5 +1,6 @@
 import Queue from "class/Queue";
-import { useEffect, useId, useReducer } from "react";
+import { getFullLoseProbMat } from "lib/strategy";
+import { useEffect, useId, useMemo, useReducer } from "react";
 import GameSetting from "typedef/GameSetting";
 import { SinglePlayGameState } from "typedef/GameState";
 import SinglePlayAction from "typedef/SinglePlayAction";
@@ -58,7 +59,10 @@ function getInitialGameState(gameSetting: GameSetting, gameId: string): SinglePl
 export function useGameState(gameSetting: GameSetting) {
   const gameId = useId();
   const [state, dispatch] = useReducer(gameStateReducer, getInitialGameState(gameSetting, gameId));
+  const losemat = useMemo(() => getFullLoseProbMat(gameSetting.numPlayer, gameSetting.maxCall, gameSetting.numEnd), []);
+  
   useEffect(() => {
+    // on ai turn
     if (state.activePlayer === gameSetting.myOrder) {
       return
     }

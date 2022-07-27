@@ -8,8 +8,8 @@ import { getUnitVec, matShiftToLast, vecFindMin, vecMatDot, vecNormalize} from "
  *      lose rate .7 after calling 3 number. 
  *      Thus, AI will call 3 numbers.
  * @param options Optional settings
- * @param options.absTol Arithematic error tolerance on comparison.
- * @returns Optimal choose rate for each choice.
+ * @param options.absTol 반올림 오차를 보정하기 위한 허용 오차 수준
+ * @returns 각 선택지에 대한 최적 선택 확률. 최적 선택지가 여러 개라면 그들을 동일한 확률로 선택.
  */
 export function getChooseProb(loseVec: number[], {absTol=10e-5}: {absTol?: number} = {}): number[] {
     const lowest = vecFindMin(loseVec);
@@ -18,13 +18,28 @@ export function getChooseProb(loseVec: number[], {absTol=10e-5}: {absTol?: numbe
     return result;
 }
 
-export function getLookupMat(loseMat: number[][], maxCall: number, currentNum: number) {
+/**
+ * 사전 계산된 패배 확률 행렬 `loseMat` 을 인자로 받습니다. `loseMat`에서 플레이어가 선택할 수 있는 숫자 범위만 슬라이스하여 반환합니다.
+ * @param loseMat 
+ * @param maxCall 
+ * @param currentNum 
+ * @returns 슬리이스된 패배 확률 행렬
+ */
+export function getLookupMat(loseMat: number[][], maxCall: number, currentNum: number): number[][] {
     const startRow = currentNum+1;
     const endRow = currentNum+maxCall+1;
     const lookupMat = loseMat.slice(startRow, endRow);
     return lookupMat;
 }
 
+/**
+ * `getLookupMat`과 역순으로, 플레이어가 선택할 수 있는 숫자 범위를 슬라이스하여 반환합니다.
+ * @param loseMat 
+ * @param maxCall 
+ * @param currentNum 
+ * @param numEnd 
+ * @returns 
+ */
 export function getLookupMatRev(loseMat: number[][], maxCall: number, currentNum: number, numEnd: number) {
     const currentIdx = numEnd - currentNum;
     const endRow = Math.max(currentIdx, 0);
@@ -38,7 +53,7 @@ export function getLookupMatRev(loseMat: number[][], maxCall: number, currentNum
  * @param loseMat 
  * @param maxCall 
  * @param currentNum 
- * @returns (Modified) Lose rate vector regarding `loseMat`. 
+ * @returns 
  */
 export function getLoseVec(loseMat: number[][], maxCall: number, currentNum: number): number[] {
     const lookupMat = getLookupMat(loseMat, maxCall, currentNum)
@@ -78,4 +93,11 @@ export function getFullLoseProbMat(numPlayer: number, maxCall: number, numEnd: n
     } catch (e) {
         return [[]]
     }
+}
+
+export function getNextCall(loseProbMat: number[][], currentNum: number, maxCall: number): number {
+    const loseVec = getLoseVec(loseProbMat, maxCall, currentNum);
+    const chooseProb = getChooseProb(loseVec);
+    const nextCall = vecFindMin(chooseProb);
+    return nextCall;
 }
