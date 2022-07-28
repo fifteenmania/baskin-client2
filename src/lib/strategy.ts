@@ -38,7 +38,7 @@ export function getLookupMat(loseMat: number[][], maxCall: number, currentNum: n
  * @param maxCall 
  * @param currentNum 
  * @param numEnd 
- * @returns 
+ * @returns 슬라이스된 패배 확률 행렬
  */
 export function getLookupMatRev(loseMat: number[][], maxCall: number, currentNum: number, numEnd: number) {
     const currentIdx = numEnd - currentNum;
@@ -49,7 +49,7 @@ export function getLookupMatRev(loseMat: number[][], maxCall: number, currentNum
 }
 
 /**
- * 
+ * 사전 계산된 패배 확률 행렬 `loseMat`을 기반으로, 플레이어의 각 선택지에 대한 패배 확률을 반환합니다.
  * @param loseMat 
  * @param maxCall 
  * @param currentNum 
