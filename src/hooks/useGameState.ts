@@ -59,14 +59,13 @@ function getInitialGameState(gameSetting: GameSetting, gameId: string): SinglePl
 export function useGameState(gameSetting: GameSetting) {
   const gameId = useId();
   const [state, dispatch] = useReducer(gameStateReducer, getInitialGameState(gameSetting, gameId));
-  const losemat = useMemo(() => getFullLoseProbMat(gameSetting.numPlayer, gameSetting.maxCall, gameSetting.numEnd), []);
-  
+  const loseProbMat = useMemo(() => getFullLoseProbMat(gameSetting.numPlayer, gameSetting.maxCall, gameSetting.numEnd), [gameSetting]);
   useEffect(() => {
     // on ai turn
     if (state.activePlayer === gameSetting.myOrder) {
       return
     }
     
-  }, [state])
+  }, [state, gameSetting.myOrder])
   return [state, dispatch] as const
 }

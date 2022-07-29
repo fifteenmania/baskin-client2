@@ -59,7 +59,7 @@ export function getRandomIndex(chooseProb: number[]): number {
         lower = cumsum[i-1];
         upper = cumsum[i];
     }
-    throw new Error("invalid parameters");
+    throw new Error(`invalid parameters : ${chooseProb}`);
 }
 
 /**

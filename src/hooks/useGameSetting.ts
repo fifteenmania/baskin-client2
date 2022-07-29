@@ -28,7 +28,7 @@ function gameSettingReducer(state: GameSettingInput, action: GameSettingAction):
   const parsed = Number.parseInt(action.payload) ?? 0
   switch (action.type) {
     case (GameSettingActionsKind.SET_MAX_CALL):
-      if (parsed > 10000) {
+      if (parsed > 1000) {
         return state;
       }
       const numEnd = Number.parseInt(state.numEnd);
@@ -55,7 +55,7 @@ function gameSettingReducer(state: GameSettingInput, action: GameSettingAction):
         myOrder: action.payload
       }
     case(GameSettingActionsKind.SET_NUM_END):
-      if (parsed > 10000) {
+      if (parsed > 1000) {
         return state;
       }
       return {
@@ -63,7 +63,7 @@ function gameSettingReducer(state: GameSettingInput, action: GameSettingAction):
         numEnd: action.payload
       }
     case(GameSettingActionsKind.SET_NUM_PLAYER):
-      if (parsed > 10000) {
+      if (parsed > 500) {
         return state;
       }
       return {
