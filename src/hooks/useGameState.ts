@@ -1,71 +1,42 @@
-import Queue from "class/Queue";
-import { getFullLoseProbMat } from "lib/strategy";
-import { useEffect, useId, useMemo, useReducer } from "react";
+import { useId, useMemo, useState } from "react";
+import { GameLogEntry } from "typedef/GameLog";
 import GameSetting from "typedef/GameSetting";
-import { SinglePlayGameState } from "typedef/GameState";
-import SinglePlayAction from "typedef/SinglePlayAction";
+import useStrategy from "./useStrategy";
 
-export type GameStateDispatch = React.Dispatch<SinglePlayAction>
+export type GameState = ReturnType<typeof useGameState>;
 
-export function getNextPlayer(currentPlayer: number, numPlayer: number) {
-  return (currentPlayer + 1) % numPlayer
-}
-
-export function getPrevPlayer(currentPlayer: number, numPlayer: number) {
-  return (currentPlayer - 1 + numPlayer) % numPlayer
-}
-
-function gameStateReducer(state: SinglePlayGameState, action: SinglePlayAction): SinglePlayGameState {
-  if (state.isEnd) {
-    return state;
-  }
-  switch (action.type) {
-    case "call": {
-      const nextPlayer = getNextPlayer(state.activePlayer, state.gameSetting.numPlayer)
-      if (action.payload >= state.gameSetting.numEnd) {
-        return {
-          ...state,
-          activePlayer: nextPlayer,
-          currentNumber: action.payload,
-          isEnd: true,
-        }
-      }
-      return {
-        ...state,
-        activePlayer: nextPlayer,
-        currentNumber: action.payload,
-      }
-    }
-    default:
-      return state;
-  }
-}
-
-function getInitialGameState(gameSetting: GameSetting, gameId: string): SinglePlayGameState {
-  return {
-    gameSetting: gameSetting,
-    activePlayer: 0,
-    currentNumber: 0,
-    inputEnabled: false,
-    isEnd: false,
-    gameLog: {
-      gameId: gameId,
-      gameSetting: gameSetting,
-      log: []
-    }
-  }
+function getNextPlayer(currentPlayer: number, numPlayer: number) {
+  return (currentPlayer + 1) % numPlayer;
 }
 
 export function useGameState(gameSetting: GameSetting) {
   const gameId = useId();
-  const [state, dispatch] = useReducer(gameStateReducer, getInitialGameState(gameSetting, gameId));
-  const loseProbMat = useMemo(() => getFullLoseProbMat(gameSetting.numPlayer, gameSetting.maxCall, gameSetting.numEnd), [gameSetting]);
-  useEffect(() => {
-    // on ai turn
-    if (state.activePlayer === gameSetting.myOrder) {
-      return
-    }
-    
-  }, [state, gameSetting.myOrder])
-  return [state, dispatch] as const
+  const gameStrategy = useStrategy(gameSetting);
+  const [currentPlayer, setCurrentPlayer] = useState(0);
+  const [log, setLog] = useState<GameLogEntry[]>([]);
+  const result = useMemo(() => ({
+    gameStrategy: gameStrategy,
+    gameId: gameId,
+    gameSetting: gameSetting,
+    log: log,
+    reset: () => {
+      setLog([]);
+      setCurrentPlayer(0);
+      gameStrategy.reset();
+    },
+    isEnd: gameStrategy.isEnd,
+    getBestNum: gameStrategy.getBestNum,
+    getLoseProb: gameStrategy.getLoseProb,
+    currentNum: gameStrategy.currentNum,
+    currentPlayer: currentPlayer,
+    setCurrentNum: (call: number) => {
+      if (gameStrategy.isEnd) {
+        return
+      }
+      setCurrentPlayer((currentPlayer) => getNextPlayer(currentPlayer, gameSetting.numPlayer));
+      gameStrategy.setNextNum(call);
+      setLog((lastLog) => [...lastLog, { player: currentPlayer, number: call }]);
+    },
+  }), [gameStrategy, gameSetting, gameId, currentPlayer, log]);
+  return result;
 }

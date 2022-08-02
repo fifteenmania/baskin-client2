@@ -7,7 +7,7 @@ import { vecCumSum } from "./linarg";
  * @returns [`min`, `max`) 의 범위에서 추출된 임의의 실수입니다.
  */
 export function getRandom(min: number, max: number): number {
-    return Math.random()*(max-min) + min;
+  return Math.random()*(max-min) + min;
 }
 
 /**
@@ -17,7 +17,7 @@ export function getRandom(min: number, max: number): number {
  * @returns [`min`, `max`) 의 범위에서 추출된 임의의 정수입니다.
  */
 export function getRandomInt(min: number, max: number): number {
-    return Math.floor(getRandom(Math.ceil(min), Math.floor(max)));
+  return Math.floor(getRandom(Math.ceil(min), Math.floor(max)));
 }
 
 /**
@@ -27,7 +27,7 @@ export function getRandomInt(min: number, max: number): number {
  * @returns [`min`, `max`) 에서 임의 추출된 `length`개의 정수로 구성된 벡터입니다.
  */
 export function getRandomIntVec(length: number, min: number, max: number): number[] {
-    return Array.from(Array(length)).map(() => getRandomInt(min, max));
+  return Array.from(Array(length)).map(() => getRandomInt(min, max));
 }
 
 /**
@@ -36,30 +36,33 @@ export function getRandomIntVec(length: number, min: number, max: number): numbe
  * @returns 대상 벡터에서 임의 추출된 하나의 요소입니다.
  */
 export function randomSampleOne<T>(vec: T[]): T {
-    const pickedIdx = getRandomInt(0, vec.length);
-    return vec[pickedIdx];
+  const pickedIdx = getRandomInt(0, vec.length);
+  return vec[pickedIdx];
 }
 
 /**
  * 
  * @param chooseProb 각 인덱스별로 추출될 확률로 구성된 벡터입니다. 예를 들어 [0.5, 0, 0.5]의 입력을 받으면 50% 확률로 0 또는 2 의 값이 추출됩니다. 합이 1로 정규화되어 있어야 합니다.
- * @returns 입력 벡터에 따라 추출된 인덱스 정수입니다.
+ * @returns 입력 벡터에 따라 추출된 인덱스 정수입니다. 빈 입력을 받았거나 오류 시 -1을 반환합니다.
  */
 export function getRandomIndex(chooseProb: number[]): number {
-    const cumsum = vecCumSum(chooseProb);
-    const rand = Math.random();
-    var i = 0;
-    var lower = 0;
-    var upper = cumsum[i];
-    while (i < cumsum.length) {
-        if (rand >= lower && rand < upper) {
-            return i;
-        }
-        i++;
-        lower = cumsum[i-1];
-        upper = cumsum[i];
+  if (chooseProb.length === 0) {
+    return -1;
+  }
+  const cumsum = vecCumSum(chooseProb);
+  const rand = Math.random();
+  let i = 0;
+  let lower = 0;
+  let upper = cumsum[i];
+  while (i < cumsum.length) {
+    if (rand >= lower && rand < upper) {
+      return i;
     }
-    throw new Error(`invalid parameters : ${chooseProb}`);
+    i++;
+    lower = cumsum[i-1];
+    upper = cumsum[i];
+  }
+  return -1;
 }
 
 /**
@@ -68,5 +71,5 @@ export function getRandomIndex(chooseProb: number[]): number {
  * @returns [0, 1) 의 범위에서 추출된 난수로 구성된 `len` 길이의 벡터입니다.
  */
 export function getRandomVec(len: number): number[] {
-    return Array.from(Array(len)).map((_) => Math.random());
+  return Array.from(Array(len)).map((_) => Math.random());
 }

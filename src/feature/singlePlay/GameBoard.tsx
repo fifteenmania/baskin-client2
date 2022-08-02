@@ -1,9 +1,8 @@
 import GameSetting from "typedef/GameSetting";
 import Avatar, { ColorString } from "avataaars2"
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useDarkMode from "hooks/useDarkMode";
-import { SinglePlayGameState } from "typedef/GameState";
-import { GameStateDispatch, useGameState } from "hooks/useGameState";
+import { GameState, useGameState } from "hooks/useGameState";
 
 function getBackgroundColor(dark:boolean, onTurn: boolean, onEnd: boolean): ColorString {
   if (onTurn && onEnd) {
@@ -25,24 +24,24 @@ export function PlayerAvatar({bgColor} : {bgColor: ColorString}) {
   </div>
 }
 
-function AvatarContainer({gameState, dispatch} : {gameState: SinglePlayGameState, dispatch: GameStateDispatch}) {
+function AvatarContainer({gameState} : {gameState: GameState}) {
   const [dark, ] = useDarkMode()
   return <div className="flex flex-row flex-wrap mt-6">
-    {Array.from({length: gameState.gameSetting.numPlayer}).map((_, i) => <PlayerAvatar key={i} bgColor={getBackgroundColor(dark, gameState.activePlayer === i, gameState.isEnd)}/>)}
+    {Array.from({length: gameState.gameSetting.numPlayer}).map((_, i) => <PlayerAvatar key={i} bgColor={getBackgroundColor(dark, gameState.currentPlayer === i, gameState.isEnd)}/>)}
   </div>
 }
 
-function getAvailableCallList(gameState: SinglePlayGameState) {
-  const start = gameState.currentNumber + 1
+function getAvailableCallList(gameState: GameState) {
+  const start = gameState.currentNum + 1
   const call = gameState.gameSetting.maxCall - 1
   const end = (start + call > gameState.gameSetting.numEnd) ? gameState.gameSetting.numEnd : start + call;
   return Array.from({length: end - start + 1}).map((_, i) => start + i)
 }
 
-function InputContainer({gameState, dispatch} : {gameState: SinglePlayGameState, dispatch: GameStateDispatch}) {
-  const availableCall = getAvailableCallList(gameState);
-  const [call, setCall] = useState(availableCall[0]);
-  return <div className="">
+function InputContainer({gameState} : {gameState: GameState}) {
+  const availableCall = useMemo(() => getAvailableCallList(gameState), [gameState]);
+  const [call, setCall] = useState(() => availableCall[0]);
+  return <div className=" space-x-2">
     <select
       className="w-24 h-12
         font-semibold
@@ -61,18 +60,37 @@ function InputContainer({gameState, dispatch} : {gameState: SinglePlayGameState,
       {availableCall.map((call, i) => <option key={i} value={call}>{call}</option>)}
     </select>
     <button onClick={() => {
-      dispatch({type: "call", payload: call})
-      setCall(call+1)
+      gameState.setCurrentNum(call);
+      if (call < gameState.gameSetting.numEnd) {
+        setCall(call+1)
+      }
     }}
     >까지 말하기</button>
-    {gameState.currentNumber}
+    <button onClick={() => {
+      setCall(1);
+      gameState.reset()
+    }}>재시작 </button>
+    {` 현재 숫자 ${gameState.currentNum}, 플레이어 ${gameState.currentPlayer}, 종료여부 ${gameState.isEnd}, 저장된 콜 ${call}`}
+  </div>
+}
+
+function GameLogBox({gameState}: {gameState: GameState}) {
+  return <div className="flex flex-col">
+    {gameState.log.map((log, i) => <div key={i}>{`${log.player} : ${log.number}`}</div>)}  
   </div>
 }
 
 export default function GameBoard({gameSetting}: {gameSetting: GameSetting}) {
-  const [gameState, dispatch] = useGameState(gameSetting);
+  const gameState = useGameState(gameSetting);
+  useEffect(() => {
+    if (gameState.currentPlayer !== gameSetting.myOrder && !gameState.isEnd) {
+      const bestNum = gameState.getBestNum();
+      gameState.setCurrentNum(bestNum);
+    }
+  }, [gameState, gameSetting])
   return <div className="mt-6">
-    <InputContainer gameState={gameState} dispatch={dispatch}/>
-    <AvatarContainer gameState={gameState} dispatch={dispatch}/>
+    <InputContainer gameState={gameState}/>
+    <AvatarContainer gameState={gameState}/>
+    <GameLogBox gameState={gameState}/>
   </div>
 }
