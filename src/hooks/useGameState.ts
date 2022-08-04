@@ -1,12 +1,16 @@
-import { useId, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
 import { GameLogEntry } from "typedef/GameLog";
 import GameSetting from "typedef/GameSetting";
 import useStrategy from "./useStrategy";
 
 export type GameState = ReturnType<typeof useGameState>;
 
-function getNextPlayer(currentPlayer: number, numPlayer: number) {
+export function getNextPlayer(currentPlayer: number, numPlayer: number) {
   return (currentPlayer + 1) % numPlayer;
+}
+
+export function getPrevPlayer(currentPlayer: number, numPlayer: number) {
+  return (currentPlayer + numPlayer - 1) % numPlayer;
 }
 
 export function useGameState(gameSetting: GameSetting) {
@@ -25,17 +29,29 @@ export function useGameState(gameSetting: GameSetting) {
       gameStrategy.reset();
     },
     isEnd: gameStrategy.isEnd,
+    inputAvailable: currentPlayer === gameSetting.myOrder && !gameStrategy.isEnd,
     getBestNum: gameStrategy.getBestNum,
     getLoseProb: gameStrategy.getLoseProb,
     currentNum: gameStrategy.currentNum,
     currentPlayer: currentPlayer,
     setCurrentNum: (call: number) => {
+      let actualCall = call;
       if (gameStrategy.isEnd) {
         return
       }
-      setCurrentPlayer((currentPlayer) => getNextPlayer(currentPlayer, gameSetting.numPlayer));
-      gameStrategy.setNextNum(call);
-      setLog((lastLog) => [...lastLog, { player: currentPlayer, number: call }]);
+      if (call < gameStrategy.currentNum) {
+        return
+      }
+      if (call > gameSetting.maxCall + gameStrategy.currentNum) {
+        actualCall = gameSetting.maxCall + gameStrategy.currentNum;
+      }
+      if (call >= gameSetting.numEnd) {
+        actualCall = gameSetting.numEnd;
+      } else {
+        setCurrentPlayer((currentPlayer) => getNextPlayer(currentPlayer, gameSetting.numPlayer));
+      }
+      gameStrategy.setNextNum(actualCall);
+      setLog((lastLog) => [...lastLog, { player: currentPlayer, number: actualCall }]);
     },
   }), [gameStrategy, gameSetting, gameId, currentPlayer, log]);
   return result;
