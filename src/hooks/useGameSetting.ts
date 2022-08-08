@@ -62,14 +62,17 @@ function gameSettingReducer(state: GameSettingInput, action: GameSettingAction):
         ...state,
         numEnd: action.payload
       }
-    case(GameSettingActionsKind.SET_NUM_PLAYER):
+    case(GameSettingActionsKind.SET_NUM_PLAYER): {
+      const myOrder = Number.parseInt(state.myOrder);
       if (parsed > 500) {
         return state;
       }
       return {
         ...state,
+        myOrder: (myOrder < parsed ? myOrder : parsed).toString(),
         numPlayer: action.payload
       }
+    }
     default:
       return state;
   }

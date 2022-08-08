@@ -1,7 +1,7 @@
 import Header from "component/Header";
 import { SinglePlayIcon } from "asset/assets";
 import { InputPanelWithPlayer } from "component/InputPanel";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import GameBoard from "./GameBoard";
 import useGameSetting, { gameSettingInputToGameSetting } from "hooks/useGameSetting";
 import Description from "component/Description";
@@ -18,7 +18,7 @@ export default function SinglePlayMain() {
     </Description>
     <div>
       {gameStart? null: <div>
-        <InputPanelWithPlayer gameSetting={gameSettingInput} dispatch={settingDispatch}/>
+        <InputPanelWithPlayer gameSettingInput={gameSettingInput} dispatch={settingDispatch}/>
         <button onClick={() => setGameStart(true)}>게임 시작</button>
       </div>}
       {gameStart? <GameBoard gameSetting={gameSetting} backToSetting={backToSetting}/> : null}

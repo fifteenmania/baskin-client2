@@ -1,4 +1,4 @@
-import { getUnitVec, maskVecAsMin, matShiftToLast, vecFindMin, vecMatDot, vecNormalize} from "./linarg";
+import { getUnitVec, maskVecAsMin, matShiftToLast, vecMatDot } from "./linarg";
 import { getRandomIndex } from "./randUtil";
 
 /**
@@ -81,10 +81,13 @@ export function getLoseVecRev(loseMat: number[][], maxCall: number, currentNum: 
  * @returns ((`numEnd` + 1) x (`numPlayer`)) lose probability matrix. 
  */
 export function getFullLoseProbMat(numPlayer: number, maxCall: number, numEnd: number): number[][] {
-  const loseMat = [];
+  const loseMat: number[][] = [];
+  if (numPlayer <= 0 || maxCall <= 0) {
+    return loseMat;
+  }
   const initial = getUnitVec(numPlayer);
   loseMat.push(initial);
-  for (var currentNum=numEnd-1; currentNum>=0; currentNum--) {
+  for (let currentNum=numEnd-1; currentNum>=0; currentNum--) {
     const lookupMat = getLookupMatRev(loseMat, maxCall, currentNum, numEnd);
     
     const loseVec = lookupMat.map((lookupMatRow) => lookupMatRow[0]);
